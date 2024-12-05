@@ -1,52 +1,38 @@
-import com.android.build.api.dsl.CommonExtension
-import com.android.build.gradle.LibraryExtension
-import org.gradle.api.JavaVersion
+import com.android.build.api.dsl.LibraryExtension
+import com.s2start.convention.ExtensionType
+import com.s2start.convention.configureBuildTypes
+import com.s2start.convention.configureKotlinAndroid
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.configure
-import org.gradle.kotlin.dsl.withType
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+import org.gradle.kotlin.dsl.dependencies
+import org.gradle.kotlin.dsl.kotlin
 
-class AndroidLibraryConventionPlugin : Plugin<Project> {
-    override fun apply(project: Project) {
-        with(project) {
-            with(pluginManager) {
+class AndroidLibraryConventionPlugin: Plugin<Project> {
+
+    override fun apply(target: Project) {
+        target.run {
+            pluginManager.run {
                 apply("com.android.library")
                 apply("org.jetbrains.kotlin.android")
             }
 
             extensions.configure<LibraryExtension> {
                 configureKotlinAndroid(this)
-                defaultConfig.targetSdk = 34
-            }
-        }
-    }
 
-    private fun Project.configureKotlinAndroid(
-        commonExtension: CommonExtension<*, *, *, *, *>,
-    ) {
-        commonExtension.apply {
-            compileSdk = 35
+                configureBuildTypes(
+                    commonExtension = this,
+                    extensionType = ExtensionType.LIBRARY
+                )
 
-            defaultConfig {
-                minSdk = 26
+                defaultConfig {
+                    testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+                    consumerProguardFiles("consumer-rules.pro")
+                }
             }
 
-            compileOptions {
-                sourceCompatibility = JavaVersion.VERSION_11
-                targetCompatibility = JavaVersion.VERSION_11
-            }
-        }
-
-        configureKotlin()
-    }
-
-    private fun Project.configureKotlin() {
-        // Use withType to workaround https://youtrack.jetbrains.com/issue/KT-55947
-        tasks.withType<KotlinCompile>().configureEach {
-            kotlinOptions {
-                // Set JVM target to 11
-                jvmTarget = JavaVersion.VERSION_11.toString()
+            dependencies {
+                "testImplementation"(kotlin("test"))
             }
         }
     }
