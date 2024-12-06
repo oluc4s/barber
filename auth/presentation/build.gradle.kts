@@ -3,3 +3,8 @@ plugins {
 }
 
 android { namespace = "com.s2start.presentation"}
+
+dependencies {
+    implementation(projects.core.domain)
+    implementation(projects.auth.domain)
+}

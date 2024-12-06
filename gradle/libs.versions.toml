@@ -41,6 +41,7 @@ health = "1.0.0-rc02"
 play-services-wearable = "19.0.0"
 wear = "1.3.0"
 lottie = "6.0.0"
+firebaseAuth = "22.3.1"
 
 # Project versions
 projectApplicationId = "com.s2start.sample"
@@ -49,6 +50,7 @@ projectMinSdkVersion = "25"
 projectTargetSdkVersion = "35"
 projectCompileSdkVersion = "35"
 projectVersionCode = "1"
+materialVersion = "1.12.0"
 
 
 [libraries]
@@ -116,6 +118,10 @@ android-tools-common = { group = "com.android.tools", name = "common", version.r
 kotlin-gradlePlugin = { group = "org.jetbrains.kotlin", name = "kotlin-gradle-plugin", version.ref = "kotlin" }
 ksp-gradlePlugin = { group = "com.google.devtools.ksp", name = "com.google.devtools.ksp.gradle.plugin", version.ref = "ksp" }
 room-gradlePlugin = { group = "androidx.room", name = "room-gradle-plugin", version.ref = "room" }
+material = { group = "com.google.android.material", name = "material", version.ref = "materialVersion" }
+
+#Firebase
+firebase-auth = { group = "com.google.firebase", name = "firebase-auth", version.ref = "firebaseAuth" }
 
 
 [plugins]
@@ -137,6 +143,7 @@ sample-android-library-compose = { id = "sample.android.library.compose", versio
 sample-android-application = { id = "sample.android.application", version = "unspecified" }
 sample-android-application-compose = { id = "sample.android.application.compose", version = "unspecified" }
 sample-jvm-ktor = { id = "sample.jvm.ktor", version = "unspecified" }
+sample-jvm-library = { id = "sample.jvm.library", version = "unspecified" }
 
 
 [bundles]

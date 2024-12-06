@@ -2,20 +2,15 @@ package com.s2start.presentation.ui.login
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.s2start.core.ModelResult.Companion.onFailure
-import com.s2start.core.ModelResult.Companion.onSuccess
-import com.s2start.core.data.manager.DataStoreManager
-import com.s2start.core.data.usecase.LoginUseCase
-import com.s2start.core.utils.Constants
+import com.s2start.domain.usecase.LoginUseCase
+import com.s2start.domain.util.ModelResult.Companion.onFailure
+import com.s2start.domain.util.ModelResult.Companion.onSuccess
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
-class LoginViewModel(
-    private val loginUseCase: LoginUseCase,
-    private val dataStoreManager:DataStoreManager
-):ViewModel() {
+class LoginViewModel(private val loginUseCase: LoginUseCase):ViewModel() {
     private val _loginState = MutableStateFlow<LoginState>(LoginState.Default)
     val loginState: StateFlow<LoginState> = _loginState.asStateFlow()
 
@@ -31,7 +26,7 @@ class LoginViewModel(
     }
     private fun noWantLogin(){
         viewModelScope.launch {
-            dataStoreManager.setValue(Constants.DataStore.NOWANTLOGIN, true)
+//            dataStoreManager.setValue(Constants.DataStore.NOWANTLOGIN, true)
         }
     }
 
@@ -40,7 +35,6 @@ class LoginViewModel(
         when(event){
             is LoginEvent.Login -> login(email = event.email, password = event.password)
             is LoginEvent.NoWantLogin -> noWantLogin()
-
         }
     }
 }

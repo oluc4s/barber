@@ -63,4 +63,14 @@ dependencies {
 
     // Timber
     implementation(libs.timber)
+
+    // Auth
+    implementation(projects.auth.presentation)
+    implementation(projects.auth.domain)
+
+    //Core
+    implementation(projects.core.presentation.designsystem)
+    implementation(projects.core.presentation.ui)
+    implementation(projects.core.domain)
+    implementation(projects.core.data)
 }
