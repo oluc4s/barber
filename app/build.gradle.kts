@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.sample.android.application.compose)
     alias(libs.plugins.sample.jvm.ktor)
+    id("com.google.gms.google-services")
 }
 
 android {
@@ -67,10 +68,13 @@ dependencies {
     // Auth
     implementation(projects.auth.presentation)
     implementation(projects.auth.domain)
+    implementation(projects.auth.data)
 
     //Core
     implementation(projects.core.presentation.designsystem)
     implementation(projects.core.presentation.ui)
     implementation(projects.core.domain)
     implementation(projects.core.data)
+
+    implementation(platform("com.google.firebase:firebase-bom:33.7.0"))
 }

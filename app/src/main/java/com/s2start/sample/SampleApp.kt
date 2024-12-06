@@ -3,11 +3,14 @@ package com.s2start.sample
 import android.app.Application
 import android.content.Context
 import com.google.android.play.core.splitcompat.SplitCompat
-import com.s2start.presentation.di.authViewModelModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
 import timber.log.Timber
+import com.s2start.core.data.di.coreDataModule
+import com.s2start.auth.presentation.di.authViewModelModule
+import com.s2start.auth.data.di.authDataModule
+import com.s2start.core.presentation.ui.BuildConfig
 
 class SampleApp: Application() {
 
@@ -21,7 +24,11 @@ class SampleApp: Application() {
         startKoin {
             androidLogger()
             androidContext(this@SampleApp)
-            modules(authViewModelModule)
+            modules(
+                authDataModule,
+                authViewModelModule,
+                coreDataModule
+            )
         }
     }
 

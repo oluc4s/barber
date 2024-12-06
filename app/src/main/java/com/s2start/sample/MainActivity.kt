@@ -11,7 +11,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.s2start.presentation.ui.login.LoginScreenRoot
+import com.s2start.auth.presentation.ui.login.LoginScreenRoot
 import com.s2start.sample.ui.theme.SampleTheme
 
 class MainActivity : ComponentActivity() {
