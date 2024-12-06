@@ -131,8 +131,9 @@ compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "
 
 #SAMPLE
 sample-android-feature-ui = { id = "sample.android.feature.ui", version = "unspecified" }
-sample-android-application = { id = "sample.android.application", version = "unspecified" }
 sample-android-library = { id = "sample.android.library", version = "unspecified" }
+sample-android-library-compose = { id = "sample.android.library.compose", version = "unspecified" }
+sample-android-application = { id = "sample.android.application", version = "unspecified" }
 sample-android-application-compose = { id = "sample.android.application.compose", version = "unspecified" }
 sample-jvm-ktor = { id = "sample.jvm.ktor", version = "unspecified" }
 

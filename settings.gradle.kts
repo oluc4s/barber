@@ -16,5 +16,8 @@ dependencyResolutionManagement {
 gradle.startParameter.excludedTaskNames.addAll(listOf(":build-logic:convention:testClasses"))
 
 rootProject.name = "sample"
+enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 include(":app")
 include(":auth:presentation")
+include(":core:presentation:designsystem")
+include(":core:presentation:ui")
