@@ -42,15 +42,17 @@ import org.koin.androidx.compose.koinViewModel
 @Composable
 fun LoginScreenRoot(
     onSignUpClick: () -> Unit,
+    onLoginSuccess: () -> Unit,
     viewModel: LoginViewModel = koinViewModel(),
 ) {
     val loginState by viewModel.loginState.collectAsStateWithLifecycle()
-    LoginScreen(onSignUpClick,viewModel::onEvent, loginState = loginState)
+    LoginScreen(onSignUpClick,onLoginSuccess,viewModel::onEvent, loginState = loginState)
 }
 
 @Composable
 fun LoginScreen(
     onSignUpClick: () -> Unit,
+    onLoginSuccess: () -> Unit,
     onEvent:(LoginEvent) -> Unit = {},
     loginState: LoginState
 ){
