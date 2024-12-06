@@ -1,4 +1,4 @@
-package com.s2start.designsystem.components
+package com.s2start.designsystem
 
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily

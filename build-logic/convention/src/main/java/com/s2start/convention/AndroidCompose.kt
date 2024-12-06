@@ -18,6 +18,7 @@ internal fun Project.configureAndroidCompose(
             "androidTestImplementation"(platform(bom))
             "implementation"(libs.findLibrary("airbnb.lottie").get())
             "debugImplementation"(libs.findLibrary("androidx.compose.ui.tooling.preview").get())
+            "implementation"(libs.findLibrary("airbnb.lottie").get())
         }
     }
 }

@@ -1,4 +1,4 @@
-package com.s2start.tarefas.utils.theme
+package com.s2start.designsystem
 
 import androidx.compose.ui.graphics.Color
 

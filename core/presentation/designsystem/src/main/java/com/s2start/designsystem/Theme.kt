@@ -1,4 +1,4 @@
-package com.s2start.designsystem.components
+package com.s2start.designsystem
 
 import android.app.Activity
 import android.os.Build
@@ -18,12 +18,6 @@ import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
-import com.s2start.tarefas.utils.theme.PaleWhite
-import com.s2start.tarefas.utils.theme.SlateBlue
-import com.s2start.tarefas.utils.theme.SlatePurple
-import com.s2start.tarefas.utils.theme.backgroundColorDark
-import com.s2start.tarefas.utils.theme.backgroundColorLight
-import com.s2start.tarefas.utils.theme.inputColorDark
 
 private val DarkColorScheme = darkColorScheme(
     primary = Color.White,
