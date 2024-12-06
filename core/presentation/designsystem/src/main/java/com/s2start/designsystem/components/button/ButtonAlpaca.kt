@@ -29,7 +29,7 @@ import com.s2start.core.presentation.designsystem.R
 
 
 @Composable
-fun Button(
+fun ButtonAlpaca(
     modifier: Modifier = Modifier,
     enabled:Boolean = true,
     text:String,
@@ -77,7 +77,7 @@ fun Button(
 
 
 @Composable
-fun ButtonOutLine(
+fun ButtonOutLineAlpaca(
     modifier: Modifier = Modifier,
     enabled:Boolean = true,
     text:String,
@@ -122,9 +122,9 @@ fun ButtonOutLine(
 @Composable
 private fun ButtonPreview(){
     Column {
-        Button(text = "Entrar", onClick = {})
-        Button(text = "Entrar", onClick = {}, enabled = false)
-        Button(text = "Entrar", onClick = {}, enabled = false , isLoading = true)
-        ButtonOutLine(text = "Entrar", onClick = {})
+        ButtonAlpaca(text = "Entrar", onClick = {})
+        ButtonAlpaca(text = "Entrar", onClick = {}, enabled = false)
+        ButtonAlpaca(text = "Entrar", onClick = {}, enabled = false , isLoading = true)
+        ButtonOutLineAlpaca(text = "Entrar", onClick = {})
     }
 }

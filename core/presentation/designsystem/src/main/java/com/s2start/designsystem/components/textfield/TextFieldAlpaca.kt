@@ -34,7 +34,7 @@ import com.s2start.designsystem.components.textfield.utils.rememberTextFieldVali
 import com.s2start.designsystem.components.textfield.utils.validations.EmailValidation
 
 @Composable
-fun TextField(
+fun TextFieldAlpaca(
     modifier: Modifier = Modifier,
     textFieldState: TextFieldValidationState,
     label:String? = null,
@@ -143,14 +143,14 @@ fun TextField(
 private fun TextFieldPreview() {
     val email = rememberTextFieldValidation(validation = EmailValidation())
     Column{
-        TextField(
+        TextFieldAlpaca(
             modifier = Modifier.padding(vertical = 12.dp),
             textFieldState = email,
             label = "Email",
             placeholder = "Digite um email",
             error = true
         )
-        TextField(
+        TextFieldAlpaca(
             modifier = Modifier.padding(vertical = 12.dp),
             textFieldState = email,
             label = "Email",
