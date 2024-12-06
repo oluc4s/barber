@@ -40,7 +40,7 @@ composeMaterialWearOs = "1.0.0-alpha29"
 health = "1.0.0-rc02"
 play-services-wearable = "19.0.0"
 wear = "1.3.0"
-
+lottie = "6.0.0"
 
 # Project versions
 projectApplicationId = "com.s2start.sample"
@@ -108,6 +108,7 @@ androidx-wear-compose-ui-tooling = { group = "androidx.wear.compose", name = "co
 play-services-wearable = { group = "com.google.android.gms", name = "play-services-wearable", version.ref = "play-services-wearable" }
 androidx-health-services-client = { group = "androidx.health", name = "health-services-client", version.ref = "health" }
 androidx-wear = { group = "androidx.wear", name = "wear", version.ref = "wear" }
+airbnb-lottie = { module = "com.airbnb.android:lottie-compose", version.ref = "lottie"}
 
 # Gradle
 android-gradlePlugin = { group = "com.android.tools.build", name = "gradle", version.ref = "agp" }
