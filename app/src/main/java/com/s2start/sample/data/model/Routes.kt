@@ -17,11 +17,7 @@ sealed interface Routes {
     data object Login : Routes
 
     @Serializable
-    data object Run : Routes
-
+    data object HomeNavigate : Routes
     @Serializable
-    data object RunOverview : Routes
-
-    @Serializable
-    data object ActiveRun : Routes
+    data object HomeScreen : Routes
 }

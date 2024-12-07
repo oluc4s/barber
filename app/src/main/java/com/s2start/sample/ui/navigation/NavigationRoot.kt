@@ -1,12 +1,11 @@
 package com.s2start.sample.ui.navigation
 
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import androidx.navigation.navDeepLink
 import androidx.navigation.navigation
 import com.s2start.auth.presentation.ui.login.LoginScreenRoot
 import com.s2start.auth.presentation.ui.register.RegisterScreenRoot
@@ -19,7 +18,10 @@ fun NavigationRoot(
     NavHost(
         navController = navController,
         startDestination = Routes.Auth
-    ) { authGraph(navController) }
+    ) {
+        authGraph(navController)
+        homeGraph(navController)
+    }
 }
 
 private fun NavGraphBuilder.authGraph(navController: NavHostController) {
@@ -45,7 +47,7 @@ private fun NavGraphBuilder.authGraph(navController: NavHostController) {
         composable<Routes.Login> {
             LoginScreenRoot(
                 onLoginSuccess = {
-                    navController.navigate(Routes.Run) {
+                    navController.navigate(Routes.HomeNavigate) {
                         popUpTo(Routes.Auth) {
                             inclusive = true
                         }
@@ -61,6 +63,20 @@ private fun NavGraphBuilder.authGraph(navController: NavHostController) {
                     }
                 }
             )
+        }
+    }
+}
+
+
+
+private fun NavGraphBuilder.homeGraph(
+    navController: NavHostController
+) {
+    navigation<Routes.HomeNavigate>(
+        startDestination = Routes.HomeScreen,
+    ) {
+        composable<Routes.HomeScreen> {
+           Text("asdsadsa")
         }
     }
 }

@@ -14,5 +14,4 @@ val authDataModule = module {
     singleOf(::AuthRepositoryImpl).bind<AuthRepository>()
     singleOf(::LoginUseCase)
     singleOf(::CreateAccountUseCase)
-
 }

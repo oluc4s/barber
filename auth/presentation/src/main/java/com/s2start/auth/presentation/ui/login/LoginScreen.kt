@@ -37,6 +37,7 @@ import com.s2start.designsystem.components.textfield.utils.rememberTextFieldVali
 import com.s2start.designsystem.components.textfield.utils.validations.EmailValidation
 import com.s2start.designsystem.components.textfield.utils.validations.PasswordValidation
 import com.s2start.designsystem.urbanistFamily
+import com.s2start.ui.ObserveAsEvents
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
@@ -46,13 +47,17 @@ fun LoginScreenRoot(
     viewModel: LoginViewModel = koinViewModel(),
 ) {
     val loginState by viewModel.loginState.collectAsStateWithLifecycle()
-    LoginScreen(onSignUpClick,onLoginSuccess,viewModel::onEvent, loginState = loginState)
+    ObserveAsEvents(viewModel.events) { event -> when(event) {
+        LoginNotification.LoginSuccess -> {
+            onLoginSuccess()
+        }
+    } }
+    LoginScreen(onSignUpClick,viewModel::onEvent, loginState = loginState)
 }
 
 @Composable
 fun LoginScreen(
     onSignUpClick: () -> Unit,
-    onLoginSuccess: () -> Unit,
     onEvent:(LoginEvent) -> Unit = {},
     loginState: LoginState
 ){

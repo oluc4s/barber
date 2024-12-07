@@ -11,6 +11,7 @@ import com.s2start.core.data.di.coreDataModule
 import com.s2start.auth.presentation.di.authViewModelModule
 import com.s2start.auth.data.di.authDataModule
 import com.s2start.core.presentation.ui.BuildConfig
+import com.s2start.sample.di.appModule
 
 class SampleApp: Application() {
 
@@ -27,7 +28,8 @@ class SampleApp: Application() {
             modules(
                 authDataModule,
                 authViewModelModule,
-                coreDataModule
+                coreDataModule,
+                appModule
             )
         }
     }
