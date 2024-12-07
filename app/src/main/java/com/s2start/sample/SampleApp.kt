@@ -11,10 +11,13 @@ import com.s2start.core.data.di.coreDataModule
 import com.s2start.auth.presentation.di.authViewModelModule
 import com.s2start.auth.data.di.authDataModule
 import com.s2start.core.presentation.ui.BuildConfig
+import com.s2start.home.presentation.di.homePresentationModule
 import com.s2start.sample.di.appModule
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.SupervisorJob
 
 class SampleApp: Application() {
-
+    val applicationScope = CoroutineScope(SupervisorJob())
 
     override fun onCreate() {
         super.onCreate()
@@ -29,7 +32,8 @@ class SampleApp: Application() {
                 authDataModule,
                 authViewModelModule,
                 coreDataModule,
-                appModule
+                appModule,
+                homePresentationModule
             )
         }
     }

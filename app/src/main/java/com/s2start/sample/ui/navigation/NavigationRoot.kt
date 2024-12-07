@@ -1,6 +1,5 @@
 package com.s2start.sample.ui.navigation
 
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
@@ -9,6 +8,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import com.s2start.auth.presentation.ui.login.LoginScreenRoot
 import com.s2start.auth.presentation.ui.register.RegisterScreenRoot
+import com.s2start.home.presentation.ui.home.HomeScreenRoot
 import com.s2start.sample.data.model.Routes
 
 @Composable
@@ -27,13 +27,13 @@ fun NavigationRoot(
 
 private fun NavGraphBuilder.authGraph(navController: NavHostController) {
     navigation<Routes.AuthNavigation>(
-        startDestination = Routes.Login,
+        startDestination = Routes.LoginScreen,
     ) {
-        composable<Routes.Register> {
+        composable<Routes.RegisterScreen> {
             RegisterScreenRoot(
                 onSignInClick = {
-                    navController.navigate(Routes.Login) {
-                        popUpTo(Routes.Register) {
+                    navController.navigate(Routes.LoginScreen) {
+                        popUpTo(Routes.RegisterScreen) {
                             inclusive = true
                             saveState = true
                         }
@@ -41,22 +41,22 @@ private fun NavGraphBuilder.authGraph(navController: NavHostController) {
                     }
                 },
                 onSuccessfulRegistration = {
-                    navController.navigate(Routes.Login)
+                    navController.navigate(Routes.LoginScreen)
                 }
             )
         }
-        composable<Routes.Login> {
+        composable<Routes.LoginScreen> {
             LoginScreenRoot(
                 onLoginSuccess = {
                     navController.navigate(Routes.HomeNavigation) {
-                        popUpTo(Routes.Auth) {
+                        popUpTo(Routes.AuthNavigation) {
                             inclusive = true
                         }
                     }
                 },
                 onSignUpClick = {
-                    navController.navigate(Routes.Register) {
-                        popUpTo(Routes.Login) {
+                    navController.navigate(Routes.RegisterScreen) {
+                        popUpTo(Routes.LoginScreen) {
                             inclusive = true
                             saveState = true
                         }
@@ -75,7 +75,13 @@ private fun NavGraphBuilder.homeGraph(navController: NavHostController) {
         startDestination = Routes.HomeScreen
     ) {
         composable<Routes.HomeScreen> {
-           Text("asdsadsa")
+            HomeScreenRoot(onLogoutClick = {
+                navController.navigate(Routes.AuthNavigation) {
+                    popUpTo(Routes.HomeNavigation) {
+                        inclusive = true
+                    }
+                }
+            })
         }
     }
 }
