@@ -18,7 +18,7 @@ fun NavigationRoot(
 ) {
     NavHost(
         navController = navController,
-        startDestination = if (isLoggedIn) Routes.HomeNavigate else Routes.Auth
+        startDestination = if (isLoggedIn) Routes.HomeNavigation else Routes.AuthNavigation
     ) {
         authGraph(navController)
         homeGraph(navController)
@@ -26,7 +26,7 @@ fun NavigationRoot(
 }
 
 private fun NavGraphBuilder.authGraph(navController: NavHostController) {
-    navigation<Routes.Auth>(
+    navigation<Routes.AuthNavigation>(
         startDestination = Routes.Login,
     ) {
         composable<Routes.Register> {
@@ -48,7 +48,7 @@ private fun NavGraphBuilder.authGraph(navController: NavHostController) {
         composable<Routes.Login> {
             LoginScreenRoot(
                 onLoginSuccess = {
-                    navController.navigate(Routes.HomeNavigate) {
+                    navController.navigate(Routes.HomeNavigation) {
                         popUpTo(Routes.Auth) {
                             inclusive = true
                         }
@@ -70,11 +70,9 @@ private fun NavGraphBuilder.authGraph(navController: NavHostController) {
 
 
 
-private fun NavGraphBuilder.homeGraph(
-    navController: NavHostController
-) {
-    navigation<Routes.HomeNavigate>(
-        startDestination = Routes.HomeScreen,
+private fun NavGraphBuilder.homeGraph(navController: NavHostController) {
+    navigation<Routes.HomeNavigation>(
+        startDestination = Routes.HomeScreen
     ) {
         composable<Routes.HomeScreen> {
            Text("asdsadsa")

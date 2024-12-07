@@ -11,13 +11,16 @@ sealed interface Routes {
     data object Auth : Routes
 
     @Serializable
+    data object AuthNavigation : Routes
+
+    @Serializable
     data object Register : Routes
 
     @Serializable
     data object Login : Routes
 
     @Serializable
-    data object HomeNavigate : Routes
+    data object HomeNavigation : Routes
     @Serializable
     data object HomeScreen : Routes
 }
