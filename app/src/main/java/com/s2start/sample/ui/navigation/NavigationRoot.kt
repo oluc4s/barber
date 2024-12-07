@@ -13,11 +13,12 @@ import com.s2start.sample.data.model.Routes
 
 @Composable
 fun NavigationRoot(
-    navController: NavHostController
+    navController: NavHostController,
+    isLoggedIn: Boolean
 ) {
     NavHost(
         navController = navController,
-        startDestination = Routes.Auth
+        startDestination = if (isLoggedIn) Routes.HomeNavigate else Routes.Auth
     ) {
         authGraph(navController)
         homeGraph(navController)

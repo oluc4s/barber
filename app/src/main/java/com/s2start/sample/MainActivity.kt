@@ -15,16 +15,22 @@ import androidx.navigation.compose.rememberNavController
 import com.s2start.auth.presentation.ui.login.LoginScreenRoot
 import com.s2start.sample.ui.navigation.NavigationRoot
 import com.s2start.sample.ui.theme.SampleTheme
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MainActivity : ComponentActivity() {
+    private val viewModel by viewModel<MainViewModel>()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            val navController = rememberNavController()
-            NavigationRoot (
-                navController = navController
-            )
+            if(!viewModel.state.isCheckingAuth) {
+                val navController = rememberNavController()
+                NavigationRoot(
+                    navController = navController,
+                    isLoggedIn = viewModel.state.isLoggedIn
+                )
+            }
         }
     }
 }
