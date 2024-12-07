@@ -28,6 +28,9 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.s2start.core.presentation.designsystem.R
+import com.s2start.designsystem.Blue
+import com.s2start.designsystem.MutedAzure
+import com.s2start.designsystem.SlatePurple
 import com.s2start.designsystem.components.textfield.utils.TextFieldStatus
 import com.s2start.designsystem.components.textfield.utils.TextFieldValidationState
 import com.s2start.designsystem.components.textfield.utils.rememberTextFieldValidation
@@ -46,7 +49,7 @@ fun TextFieldAlpaca(
 
     val colorMargin = textFieldState.status.value.takeIf { it is TextFieldStatus.ERROR }
         ?.let { if(textFieldState.textfieldState.value.text.isNotEmpty()) Color.Red else Color.Transparent }
-        ?: if(textFieldState.textfieldState.value.text.isNotEmpty()) MaterialTheme.colorScheme.tertiary else Color.Transparent
+        ?: if(textFieldState.textfieldState.value.text.isNotEmpty()) Blue else Color.Transparent
 
     val isEyeSecure = remember { mutableStateOf(true) }
 
@@ -64,7 +67,7 @@ fun TextFieldAlpaca(
                 text = label,
                 fontSize = 14.sp,
                 fontWeight = FontWeight.Medium,
-                color = MaterialTheme.colorScheme.secondary,
+                color = MutedAzure,
                 modifier = Modifier.padding(start = 2.dp, bottom = 2.dp)
             )
         }
@@ -112,7 +115,7 @@ fun TextFieldAlpaca(
                         Icon(
                             painter = painterResource(if(isEyeSecure.value) R.drawable.ic_eye_closed else R.drawable.ic_eye ),
                             null,
-                            tint = MaterialTheme.colorScheme.primary,
+                            tint = SlatePurple,
                             modifier = Modifier.size(18.dp)
                         )
                     }

@@ -1,5 +1,6 @@
-package com.s2start.auth.presentation.ui.login
+package com.s2start.auth.presentation.ui.recover
 
+import android.widget.Toast
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -19,7 +20,10 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight
@@ -30,7 +34,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.s2start.core.presentation.designsystem.R
-import com.s2start.designsystem.AlpacaTheme
 import com.s2start.designsystem.components.button.ButtonAlpaca
 import com.s2start.designsystem.components.screen.Screen
 import com.s2start.designsystem.components.screen.rememberScreenState
@@ -43,41 +46,24 @@ import com.s2start.ui.ObserveAsEvents
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
-fun LoginScreenRoot(
-    onSignUpClick: () -> Unit,
-    onLoginSuccess: () -> Unit,
-    onRecoverClick: () -> Unit,
-    viewModel: LoginViewModel = koinViewModel(),
+fun RecoverScreenRoot(
+    onSignInClick: () -> Unit,
+    onRecoverSuccess: () -> Unit
 ) {
-    val loginState by viewModel.loginState.collectAsStateWithLifecycle()
-    ObserveAsEvents(viewModel.events) { event -> when(event) {
-        LoginNotification.LoginSuccess -> {
-            onLoginSuccess()
-        }
-    } }
-    LoginScreen(
-        onSignUpClick = onSignUpClick,
-        onRecoverClick = onRecoverClick,
-        onEvent = viewModel::onEvent,
-        loginState = loginState
-    )
+    RecoverScreen(onSignInClick,onRecoverSuccess)
 }
 
 @Composable
-fun LoginScreen(
-    onSignUpClick: () -> Unit,
-    onEvent:(LoginEvent) -> Unit = {},
-    onRecoverClick: () -> Unit,
-    loginState: LoginState
+fun RecoverScreen(
+    onSignInClick: () -> Unit,
+    onRecoverSuccess: () -> Unit
 ){
     val screenState = rememberScreenState()
     val email = rememberTextFieldValidation(validation = EmailValidation())
-    val password = rememberTextFieldValidation(isSecurity = true, validation = PasswordValidation())
-    val (rememberAccount,setRememberAccount) = remember { mutableStateOf(false) }
-    val formValid = email.isSuccess() && password.isSuccess()
-    val isLoadding = if(loginState as? LoginState.Loading != null) true else false
-    val enabled = !isLoadding
-    val isError = if(loginState as? LoginState.Error != null) true else false
+    val formValid = email.isSuccess()
+//    val isLoadding = if(loginState as? LoginState.Loading != null) true else false
+//    val enabled = !isLoadding
+//    val isError = if(loginState as? LoginState.Error != null) true else false
 
     Screen(
         screenState = screenState,
@@ -86,10 +72,10 @@ fun LoginScreen(
         Column (Modifier.padding(12.dp)){
             Row {
                 IconButton({
-                    onEvent(LoginEvent.NoWantLogin)
+                    onSignInClick()
                 }) {
                     Icon(
-                        painter = painterResource(R.drawable.ic_close),
+                        painter = painterResource(R.drawable.ic_arrow_prev_small),
                         contentDescription = null,
                         tint = MaterialTheme.colorScheme.primary
                     )
@@ -97,14 +83,14 @@ fun LoginScreen(
             }
             Spacer(modifier = Modifier.weight(1f))
             Text(
-                text = "Entrar",
+                text = "Recupere Sua Conta",
                 fontFamily = urbanistFamily,
                 fontWeight = FontWeight.Bold,
                 color = MaterialTheme.colorScheme.primary,
                 fontSize = 32.sp
             )
             Text(
-                text = "Entre para ter uma experiência completa com tarefas",
+                text = "Digite abaixo o e-mail cadastrado, e enviaremos instruções para redefinir sua senha.",
                 fontFamily = urbanistFamily,
                 fontWeight = FontWeight.Normal,
                 color = MaterialTheme.colorScheme.secondary,
@@ -115,83 +101,26 @@ fun LoginScreen(
                     modifier = Modifier.padding(vertical = 12.dp),
                     textFieldState = email,
                     label = "Email",
-                    placeholder = "Email",
-                    enabled = enabled
+                    placeholder = "Digite seu e-mail"
                 )
-                TextFieldAlpaca(
-                    modifier = Modifier.padding(vertical = 12.dp),
-                    textFieldState = password,
-                    label = "Senha",
-                    placeholder = "Senha",
-                    enabled = enabled
-                )
-            }
-            if(isError){
-                Text(
-                    text = "Email e senha invalido",
-                    fontFamily = urbanistFamily,
-                    fontWeight = FontWeight.Normal,
-                    color = Color.Red,
-                    modifier = Modifier.fillMaxWidth(),
-                    textAlign = TextAlign.Center
-                )
-            }
-            Row (
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.SpaceBetween
-            ){
-                Row (
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.SpaceBetween
-                ){
-                    Checkbox(
-                        rememberAccount,
-                        onCheckedChange = { setRememberAccount(it) }
-                    )
-                    Text(
-                        text = "Lembrar senha",
-                        fontFamily = urbanistFamily,
-                        fontWeight = FontWeight.Normal,
-                        color = MaterialTheme.colorScheme.secondary,
-                        textAlign = TextAlign.Center
-                    )
-                }
-                Spacer(modifier = Modifier.weight(1f))
-                TextButton(onClick = {
-                    onRecoverClick()
-                }) {
-                    Text(
-                        text = "Esqueceu a senha?",
-                        fontFamily = urbanistFamily,
-                        fontWeight = FontWeight.Normal,
-                        color = Color.Blue,
-                        textAlign = TextAlign.Center
-                    )
-                }
-
             }
             ButtonAlpaca(
                 modifier = Modifier.padding(top = 12.dp),
-                text = "Login",
+                text = "Enviar E-mail de Recuperação",
                 enabled = formValid,
-                isLoading = isLoadding
+                isLoading = false
             ){
-                onEvent(
-                    LoginEvent.Login(
-                        email.textfieldState.value.text,
-                        password.textfieldState.value.text
-                    )
-                )
+
             }
             Spacer(modifier = Modifier.weight(1f))
             TextButton(onClick = {
-                onSignUpClick()
+                onSignInClick()
             }) {
                 Text(
                     text = buildAnnotatedString {
-                        append("Voce deseja cadastrar?")
+                        append("Voltar para ")
                         withStyle(style = SpanStyle(fontWeight = FontWeight.Bold)) {
-                            append("Cadastrar")
+                            append("Login")
                         }
                     },
                     fontFamily = urbanistFamily,
@@ -209,16 +138,13 @@ fun LoginScreen(
 
 @PreviewLightDark
 @Composable
-fun LoginScreenPreview(){
-    AlpacaTheme{
-        LoginScreen({},{},{}, loginState = LoginState.Default)
-    }
+fun RecoverScreenPreview(){
+    RecoverScreen({},{})
+
 }
 
 @PreviewLightDark
 @Composable
-fun LoginScreenLoadingPreview(){
-    AlpacaTheme {
-        LoginScreen({},{},{}, loginState = LoginState.Loading)
-    }
+fun RecoverScreenLoadingPreview(){
+    RecoverScreen({},{})
 }

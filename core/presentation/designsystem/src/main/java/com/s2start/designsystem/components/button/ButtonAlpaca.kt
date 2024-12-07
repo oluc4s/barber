@@ -26,6 +26,9 @@ import com.airbnb.lottie.compose.LottieConstants
 import com.airbnb.lottie.compose.animateLottieCompositionAsState
 import com.airbnb.lottie.compose.rememberLottieComposition
 import com.s2start.core.presentation.designsystem.R
+import com.s2start.designsystem.AlpacaTheme
+import com.s2start.designsystem.Blue
+import com.s2start.designsystem.BlueContent
 
 
 @Composable
@@ -50,8 +53,8 @@ fun ButtonAlpaca(
         shape = RoundedCornerShape(12.dp),
         modifier = modifier.padding(top = 12.dp).fillMaxWidth(),
         colors = ButtonDefaults.buttonColors(
-            containerColor = MaterialTheme.colorScheme.primary,
-            disabledContainerColor = MaterialTheme.colorScheme.secondary,
+            containerColor = Blue,
+            disabledContainerColor = BlueContent,
         ),
         enabled = enabled && !isLoading
     ) {
@@ -66,7 +69,7 @@ fun ButtonAlpaca(
                 Text(
                     text = text,
                     fontWeight = FontWeight.SemiBold,
-                    color = if(enabled){ Color.White } else { MaterialTheme.colorScheme.secondary },
+                    color = if(enabled){ Color.White } else { Blue },
                     modifier = Modifier.padding(6.dp)
                 )
             }
@@ -96,7 +99,7 @@ fun ButtonOutLineAlpaca(
     OutlinedButton(
         onClick = onClick,
         shape = RoundedCornerShape(12.dp),
-        border = BorderStroke(1.dp, MaterialTheme.colorScheme.secondary),
+        border = BorderStroke(1.dp, Blue),
         modifier = modifier.padding(top = 12.dp).fillMaxWidth(),
         enabled = enabled && !isLoading
     ) {
@@ -111,7 +114,7 @@ fun ButtonOutLineAlpaca(
                 Text(
                     text = text,
                     fontWeight = FontWeight.SemiBold,
-                    color = MaterialTheme.colorScheme.secondary,
+                    color = Blue,
                     modifier = Modifier.padding(6.dp)
                 )
             }
@@ -121,10 +124,12 @@ fun ButtonOutLineAlpaca(
 @Preview
 @Composable
 private fun ButtonPreview(){
-    Column {
-        ButtonAlpaca(text = "Entrar", onClick = {})
-        ButtonAlpaca(text = "Entrar", onClick = {}, enabled = false)
-        ButtonAlpaca(text = "Entrar", onClick = {}, enabled = false , isLoading = true)
-        ButtonOutLineAlpaca(text = "Entrar", onClick = {})
+    AlpacaTheme {
+        Column {
+            ButtonAlpaca(text = "Entrar", onClick = {})
+            ButtonAlpaca(text = "Entrar", onClick = {}, enabled = false)
+            ButtonAlpaca(text = "Entrar", onClick = {}, enabled = false, isLoading = true)
+            ButtonOutLineAlpaca(text = "Entrar", onClick = {})
+        }
     }
 }

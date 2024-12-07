@@ -76,7 +76,7 @@ fun RegisterScreen(
                         onSignInClick()
                     }) {
                         Icon(
-                            painter = painterResource(R.drawable.ic_close),
+                            painter = painterResource(R.drawable.ic_arrow_prev_small),
                             contentDescription = null,
                             tint = MaterialTheme.colorScheme.primary
                         )

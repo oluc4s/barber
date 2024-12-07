@@ -7,6 +7,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import com.s2start.auth.presentation.ui.login.LoginScreenRoot
+import com.s2start.auth.presentation.ui.recover.RecoverScreenRoot
 import com.s2start.auth.presentation.ui.register.RegisterScreenRoot
 import com.s2start.home.presentation.ui.home.HomeScreenRoot
 import com.s2start.sample.data.model.Routes
@@ -62,7 +63,31 @@ private fun NavGraphBuilder.authGraph(navController: NavHostController) {
                         }
                         restoreState = true
                     }
+                },
+                onRecoverClick = {
+                    navController.navigate(Routes.Recover) {
+                        popUpTo(Routes.LoginScreen) {
+                            inclusive = true
+                            saveState = true
+                        }
+                        restoreState = true
+                    }
                 }
+
+            )
+        }
+        composable<Routes.Recover> {
+            RecoverScreenRoot(
+                onSignInClick = {
+                    navController.navigate(Routes.LoginScreen) {
+                        popUpTo(Routes.RegisterScreen) {
+                            inclusive = true
+                            saveState = true
+                        }
+                        restoreState = true
+                    }
+                },
+                onRecoverSuccess = {}
             )
         }
     }

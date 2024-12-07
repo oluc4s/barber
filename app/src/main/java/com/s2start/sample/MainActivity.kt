@@ -13,6 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.rememberNavController
 import com.s2start.auth.presentation.ui.login.LoginScreenRoot
+import com.s2start.designsystem.AlpacaTheme
 import com.s2start.sample.ui.navigation.NavigationRoot
 import com.s2start.sample.ui.theme.SampleTheme
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -24,12 +25,14 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            if(!viewModel.state.isCheckingAuth) {
-                val navController = rememberNavController()
-                NavigationRoot(
-                    navController = navController,
-                    isLoggedIn = viewModel.state.isLoggedIn
-                )
+            AlpacaTheme{
+                if(!viewModel.state.isCheckingAuth) {
+                    val navController = rememberNavController()
+                    NavigationRoot(
+                        navController = navController,
+                        isLoggedIn = viewModel.state.isLoggedIn
+                    )
+                }
             }
         }
     }

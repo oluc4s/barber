@@ -13,4 +13,6 @@ sealed interface Routes {
     data object HomeScreen : Routes
     @Serializable
     data object HomeNavigation: Routes
+    @Serializable
+    data object Recover: Routes
 }
