@@ -10,6 +10,7 @@ import timber.log.Timber
 import com.s2start.core.data.di.coreDataModule
 import com.s2start.auth.presentation.di.authViewModelModule
 import com.s2start.auth.data.di.authDataModule
+import com.s2start.core.database.di.databaseModule
 import com.s2start.core.presentation.ui.BuildConfig
 import com.s2start.home.presentation.di.homePresentationModule
 import com.s2start.sample.di.appModule
@@ -33,7 +34,8 @@ class SampleApp: Application() {
                 authViewModelModule,
                 coreDataModule,
                 appModule,
-                homePresentationModule
+                homePresentationModule,
+                databaseModule
             )
         }
     }

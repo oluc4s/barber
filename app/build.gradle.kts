@@ -74,7 +74,7 @@ dependencies {
     implementation(projects.core.presentation.ui)
     implementation(projects.core.domain)
     implementation(projects.core.data)
-
+    implementation(projects.core.database)
     // Home
     implementation(projects.home.presentation)
 
