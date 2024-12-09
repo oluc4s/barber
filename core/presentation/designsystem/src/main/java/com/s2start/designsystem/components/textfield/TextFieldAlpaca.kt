@@ -1,5 +1,6 @@
 package com.s2start.designsystem.components.textfield
 
+import android.util.Log
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -51,12 +52,25 @@ fun TextFieldAlpaca(
         ?.let { if(textFieldState.textfieldState.value.text.isNotEmpty()) Color.Red else Color.Transparent }
         ?: if(textFieldState.textfieldState.value.text.isNotEmpty()) Blue else Color.Transparent
 
+    val isError = remember { mutableStateOf(false) }
+    val menssage = (textFieldState.status.value as? TextFieldStatus.ERROR)?.message.orEmpty()
     val isEyeSecure = remember { mutableStateOf(true) }
 
     LaunchedEffect(textFieldState.textfieldState.value.text) {
         textFieldState.validation?.let {
             it.validate(textFieldState).let {
                 textFieldState.setStatus(it)
+            }
+        }
+    }
+    LaunchedEffect(textFieldState.status.value) {
+        textFieldState.status.value.let {
+            (textFieldState.status.value as? TextFieldStatus.ERROR)?.let { errorStatus ->
+                if (textFieldState.textfieldState.value.text.isNotEmpty()) {
+                    isError.value = true
+                    Log.e("LaunchedEffect", "${textFieldState.status.value}")
+
+                }
             }
         }
     }
@@ -124,17 +138,14 @@ fun TextFieldAlpaca(
             enabled = enabled
         )
         Row (horizontalArrangement = Arrangement.End, modifier = Modifier.fillMaxWidth()){
-
-            (textFieldState.status.value as? TextFieldStatus.ERROR)?.let { errorStatus ->
-                if(textFieldState.textfieldState.value.text.isNotEmpty()) {
-                    Text(
-                        text = errorStatus.message,
-                        fontSize = 14.sp,
-                        fontWeight = FontWeight.Medium,
-                        color = Color.Red,
-                        modifier = Modifier.padding(start = 2.dp, bottom = 2.dp)
-                    )
-                }
+            if(isError.value) {
+                Text(
+                    text = menssage,
+                    fontSize = 14.sp,
+                    fontWeight = FontWeight.Medium,
+                    color = Color.Red,
+                    modifier = Modifier.padding(start = 2.dp, bottom = 2.dp)
+                )
             }
         }
     }

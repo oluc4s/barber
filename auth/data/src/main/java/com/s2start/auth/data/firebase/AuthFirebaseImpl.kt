@@ -2,9 +2,13 @@ package com.s2start.auth.data.firebase
 
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthException
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
+import com.google.firebase.auth.FirebaseAuthInvalidUserException
 import com.google.firebase.auth.userProfileChangeRequest
 import com.s2start.data.firebase.AuthFirebase
 import com.s2start.auth.domain.model.AccountModel
+import com.s2start.core.data.auth.CredentialsException
+import com.s2start.core.data.auth.InvalidUserException
 import com.s2start.domain.AuthInfo
 import com.s2start.domain.SessionStorage
 import com.s2start.domain.util.ModelResult
@@ -35,7 +39,18 @@ class AuthFirebaseImpl(
                     }
                 }
         }catch (e:Exception){
-            ModelResult.error(throwable = e)
+            when (e) {
+                is FirebaseAuthInvalidCredentialsException -> {
+                    ModelResult.error(throwable = CredentialsException(e.message.orEmpty()))
+                }
+                is FirebaseAuthInvalidUserException -> {
+                    ModelResult.error(throwable = InvalidUserException(e.message.orEmpty()))
+                }
+                else -> {
+                    ModelResult.error(throwable = e)
+                }
+            }
+
         }
     }
 

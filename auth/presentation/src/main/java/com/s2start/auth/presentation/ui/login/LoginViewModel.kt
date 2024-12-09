@@ -3,6 +3,9 @@ package com.s2start.auth.presentation.ui.login
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.s2start.auth.domain.usecase.LoginUseCase
+import com.s2start.core.data.auth.CredentialsException
+import com.s2start.core.data.auth.InvalidUserException
+import com.s2start.domain.util.ModelResult
 import com.s2start.domain.util.ModelResult.Companion.onFailure
 import com.s2start.domain.util.ModelResult.Companion.onSuccess
 import kotlinx.coroutines.channels.Channel
@@ -24,7 +27,19 @@ class LoginViewModel(private val loginUseCase: LoginUseCase):ViewModel() {
         viewModelScope.launch {
             loginUseCase.invoke(email,password)
                 .onSuccess { sendChannel(LoginNotification.LoginSuccess) }
-                .onFailure { _loginState.value = LoginState.Error(it) }
+                .onFailure {
+                    when (it) {
+                        is CredentialsException -> {
+                            sendChannel(LoginNotification.AccountNotFound)
+                            _loginState.value = LoginState.Default
+                        }
+                        is InvalidUserException -> {
+                            sendChannel(LoginNotification.AccountNotFound)
+                            _loginState.value = LoginState.Default
+                        }
+                        else -> { _loginState.value = LoginState.Error(it) }
+                    }
+                }
         }
     }
     private fun noWantLogin(){

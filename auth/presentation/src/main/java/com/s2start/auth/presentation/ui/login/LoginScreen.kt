@@ -1,5 +1,6 @@
 package com.s2start.auth.presentation.ui.login
 
+import android.util.Log
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -13,6 +14,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -35,11 +37,14 @@ import com.s2start.designsystem.components.button.ButtonAlpaca
 import com.s2start.designsystem.components.screen.Screen
 import com.s2start.designsystem.components.screen.rememberScreenState
 import com.s2start.designsystem.components.textfield.TextFieldAlpaca
+import com.s2start.designsystem.components.textfield.utils.TextFieldStatus
 import com.s2start.designsystem.components.textfield.utils.rememberTextFieldValidation
 import com.s2start.designsystem.components.textfield.utils.validations.EmailValidation
 import com.s2start.designsystem.components.textfield.utils.validations.PasswordValidation
 import com.s2start.designsystem.urbanistFamily
 import com.s2start.ui.ObserveAsEvents
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.collectLatest
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
@@ -50,16 +55,23 @@ fun LoginScreenRoot(
     viewModel: LoginViewModel = koinViewModel(),
 ) {
     val loginState by viewModel.loginState.collectAsStateWithLifecycle()
+
     ObserveAsEvents(viewModel.events) { event -> when(event) {
-        LoginNotification.LoginSuccess -> {
-            onLoginSuccess()
+            LoginNotification.LoginSuccess -> {
+              onLoginSuccess()
+            }
+            LoginNotification.AccountNotFound -> {
+
+            }
         }
-    } }
+    }
     LoginScreen(
         onSignUpClick = onSignUpClick,
         onRecoverClick = onRecoverClick,
         onEvent = viewModel::onEvent,
-        loginState = loginState
+        loginState = loginState,
+        onLoginSuccess = onLoginSuccess,
+        events = viewModel.events
     )
 }
 
@@ -68,7 +80,9 @@ fun LoginScreen(
     onSignUpClick: () -> Unit,
     onEvent:(LoginEvent) -> Unit = {},
     onRecoverClick: () -> Unit,
-    loginState: LoginState
+    onLoginSuccess: () -> Unit,
+    loginState: LoginState,
+    events: Flow<LoginNotification>
 ){
     val screenState = rememberScreenState()
     val email = rememberTextFieldValidation(validation = EmailValidation())
@@ -78,6 +92,20 @@ fun LoginScreen(
     val isLoadding = if(loginState as? LoginState.Loading != null) true else false
     val enabled = !isLoadding
     val isError = if(loginState as? LoginState.Error != null) true else false
+
+    LaunchedEffect(Unit) {
+        events.collectLatest{
+          when(it){
+              LoginNotification.LoginSuccess -> {
+                  onLoginSuccess()
+              }
+              LoginNotification.AccountNotFound -> {
+                  Log.e("LaunchedEffect","esse e antes Email e senha invalido")
+                  password.setStatus(TextFieldStatus.ERROR("Email e senha invalido"))
+              }
+          }
+        }
+    }
 
     Screen(
         screenState = screenState,
@@ -207,18 +235,18 @@ fun LoginScreen(
     }
 }
 
-@PreviewLightDark
-@Composable
-fun LoginScreenPreview(){
-    AlpacaTheme{
-        LoginScreen({},{},{}, loginState = LoginState.Default)
-    }
-}
-
-@PreviewLightDark
-@Composable
-fun LoginScreenLoadingPreview(){
-    AlpacaTheme {
-        LoginScreen({},{},{}, loginState = LoginState.Loading)
-    }
-}
+//@PreviewLightDark
+//@Composable
+//fun LoginScreenPreview(){
+//    AlpacaTheme{
+//        LoginScreen({},{},{}, loginState = LoginState.Default)
+//    }
+//}
+//
+//@PreviewLightDark
+//@Composable
+//fun LoginScreenLoadingPreview(){
+//    AlpacaTheme {
+//        LoginScreen({},{},{},{}, loginState = LoginState.Loading)
+//    }
+//}
