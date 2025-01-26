@@ -74,7 +74,7 @@ fun Screen(
                         containerColor= containerColor,
                         snackbarHost = snackbarHost
                     ){ innerPadding ->
-                        Column(Modifier.padding(innerPadding).navigationBarsPadding()) {
+                        Column(Modifier.padding(innerPadding)) {
                             content()
                         }
                     }
@@ -89,7 +89,7 @@ fun Screen(
                 containerColor= containerColor,
                 snackbarHost = snackbarHost
             ){ innerPadding ->
-                Column(Modifier.padding(innerPadding).navigationBarsPadding()) {
+                Column(Modifier.padding(innerPadding)) {
                     content()
                 }
             }

@@ -9,9 +9,10 @@ import androidx.navigation.navigation
 import com.s2start.auth.presentation.ui.login.LoginScreenRoot
 import com.s2start.auth.presentation.ui.recover.RecoverScreenRoot
 import com.s2start.auth.presentation.ui.register.RegisterScreenRoot
-import com.s2start.home.presentation.ui.detail.DetailScreenRoot
 import com.s2start.home.presentation.ui.home.HomeScreenRoot
-import com.s2start.sample.data.model.Routes
+import com.s2start.home.presentation.ui.profile.ProfileScreen
+import com.s2start.domain.Routes
+import com.s2start.home.presentation.ui.profile.ProfileScreenRoot
 
 @Composable
 fun NavigationRoot(
@@ -101,13 +102,25 @@ private fun NavGraphBuilder.homeGraph(navController: NavHostController) {
         startDestination = Routes.HomeScreen
     ) {
         composable<Routes.HomeScreen> {
-            HomeScreenRoot(onLogoutClick = {
-                navController.navigate(Routes.AuthNavigation) {
-                    popUpTo(Routes.HomeNavigation) {
-                        inclusive = true
+            HomeScreenRoot(
+                onNavigate = {
+                    navController.navigate(it)
+                }
+            )
+        }
+        composable<Routes.ProfileScreen> {
+            ProfileScreenRoot(
+                onNavigate = {
+                    navController.navigate(it)
+                },
+                onLogoutClick = {
+                    navController.navigate(Routes.AuthNavigation) {
+                        popUpTo(Routes.HomeNavigation) {
+                            inclusive = true
+                        }
                     }
                 }
-            })
+            )
         }
     }
 }

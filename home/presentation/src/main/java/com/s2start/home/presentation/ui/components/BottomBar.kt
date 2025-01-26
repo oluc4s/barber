@@ -26,19 +26,22 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.s2start.core.presentation.designsystem.R
+import com.s2start.domain.Routes
 
 
 @Preview
 @Composable
-fun BottomBar(){
+fun BottomBar(
+    onNavigate: (Routes) -> Unit = {}
+){
     BottomNavigation(
-        modifier = Modifier.displayCutoutPadding(),
+        modifier = Modifier.navigationBarsPadding(),
         backgroundColor = MaterialTheme.colorScheme.background
     ) {
         menuItems.map { item ->
             BottomNavigationItem(
                 selected = false,
-                onClick = { },
+                onClick = { onNavigate(item.routes) },
                 icon = {
                     Icon(
                         modifier = Modifier.size(17.dp),
@@ -52,7 +55,7 @@ fun BottomBar(){
                         text = item.title.orEmpty(),
                         fontWeight = FontWeight.Normal,
                         color = MaterialTheme.colorScheme.primary,
-                        fontSize = 10.sp,
+                        fontSize = 8.sp,
                         modifier = Modifier.padding(top = 6.dp)
                     )
                 }
@@ -64,13 +67,14 @@ fun BottomBar(){
 private data class ItemMenu(
     val icon:Int,
     val title:String? = null,
-    val isRounded:Boolean = false
+    val isRounded:Boolean = false,
+    val routes:Routes
 )
 
 private var menuItems = listOf(
-    ItemMenu(R.drawable.ic_home, "Biblia"),
-    ItemMenu(R.drawable.ic_map, "Mapas"),
-    ItemMenu(R.drawable.ic_menu_cut,"Corte"),
-    ItemMenu(R.drawable.ic_message, "Mensagem"),
-    ItemMenu(R.drawable.ic_user, "User")
+    ItemMenu(R.drawable.ic_home, "Biblia", routes = Routes.HomeScreen),
+    ItemMenu(R.drawable.ic_map, "Mapas", routes = Routes.HomeScreen),
+    ItemMenu(R.drawable.ic_menu_cut,"Corte", routes = Routes.HomeScreen),
+    ItemMenu(R.drawable.ic_message, "Mensagem", routes = Routes.HomeScreen),
+    ItemMenu(R.drawable.ic_user, "User", routes = Routes.ProfileScreen)
 )

@@ -36,8 +36,7 @@ import androidx.compose.ui.unit.sp
 import com.s2start.designsystem.AlpacaTheme
 import com.s2start.designsystem.backgroundColorDark
 import com.s2start.designsystem.urbanistFamily
-import com.s2start.designsystem.yellow
-import com.s2start.designsystem.yellowSecondary
+import com.s2start.domain.Routes
 import com.s2start.home.presentation.ui.components.BottomBar
 import com.s2start.home.presentation.ui.components.CardBarber
 import com.s2start.home.presentation.ui.components.CardResumeBarber
@@ -46,15 +45,12 @@ import com.s2start.home.presentation.ui.components.SectionTitle
 
 @Composable
 fun HomeScreenRoot(
-    onLogoutClick: () -> Unit,
     viewModel: HomeViewModel = koinViewModel(),
+    onNavigate: (Routes) -> Unit = {}
 ) {
     HomeScreen(
         viewModel.state,
-        onAction = { action ->
-            when(action) { HomeAction.OnLogoutClick -> onLogoutClick() }
-            viewModel.onAction(action)
-        }
+        onNavigate = onNavigate
     )
 }
 
@@ -62,14 +58,14 @@ fun HomeScreenRoot(
 @Composable
 fun HomeScreen(
     state: HomeState,
-    onAction: (HomeAction) -> Unit
+    onNavigate: (Routes) -> Unit = {}
 ) {
     Screen(
-        topBar = { TopBar(state = state,onAction = onAction) },
-        bottomBar = { BottomBar() },
+        topBar = { TopBar(state = state) },
+        bottomBar = { BottomBar(onNavigate) },
         containerColor = MaterialTheme.colorScheme.background
     ) {
-        LazyColumn {
+        LazyColumn(modifier = Modifier.fillMaxSize()) {
             item { QuickActions() }
             item { SectionTitle("Meus Agendamentos") }
             item { CardBarber() }
@@ -99,7 +95,7 @@ fun QuickActions(){
 
 
 @Composable
-fun TopBar(state: HomeState, onAction: (HomeAction) -> Unit) {
+fun TopBar(state: HomeState) {
     val (search,setSearch) = remember { mutableStateOf(TextFieldValue()) }
     Column(
         modifier = Modifier
@@ -203,7 +199,7 @@ fun TopBar(state: HomeState, onAction: (HomeAction) -> Unit) {
 @Composable
 private fun HomeScreenPreview() {
     AlpacaTheme {
-        HomeScreen(HomeState(),onAction = {} )
+        HomeScreen(HomeState() )
     }
 }
 
@@ -211,5 +207,5 @@ private fun HomeScreenPreview() {
 @Preview
 @Composable
 private fun HeaderPreview() {
-    TopBar(state = HomeState(),onAction = {} )
+    TopBar(state = HomeState() )
 }

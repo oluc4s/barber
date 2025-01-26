@@ -1,7 +1,5 @@
-package com.s2start.sample.data.model
-
+package com.s2start.domain
 import kotlinx.serialization.Serializable
-
 sealed interface Routes {
     @Serializable
     data object AuthNavigation : Routes
@@ -11,6 +9,8 @@ sealed interface Routes {
     data object LoginScreen : Routes
     @Serializable
     data object HomeScreen : Routes
+    @Serializable
+    data object ProfileScreen : Routes
     @Serializable
     data object HomeNavigation: Routes
     @Serializable
