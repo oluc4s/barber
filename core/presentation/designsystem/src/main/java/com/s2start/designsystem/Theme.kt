@@ -22,14 +22,16 @@ import androidx.core.view.WindowCompat
 private val DarkColorScheme = darkColorScheme(
     primary = Color.White,
     secondary = SlateBlue,
+    background = backgroundColorDark,
     onBackground = backgroundColorDark,
     surfaceContainer = SlatePurple,
     tertiaryContainer = inputColorDark
 )
 
 private val LightColorScheme = lightColorScheme(
-    primary = SlatePurple,
-    secondary = SlateBlue,
+    primary = primaryDark,
+    secondary = secondaryDark,
+    background = backgroundColorLight,
     onBackground = backgroundColorLight,
     surfaceContainer = PaleWhite,
     tertiaryContainer = PaleWhite
@@ -52,11 +54,6 @@ fun AlpacaTheme(
     content: @Composable () -> Unit
 ) {
     val colorScheme = when {
-        dynamicColor && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S -> {
-            val context = LocalContext.current
-            if (darkTheme) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
-        }
-
         darkTheme -> DarkColorScheme
         else -> LightColorScheme
     }

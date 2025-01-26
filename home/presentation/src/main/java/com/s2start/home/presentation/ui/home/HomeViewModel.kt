@@ -15,13 +15,15 @@ class HomeViewModel(
     private val applicationScope: CoroutineScope,
     private val sessionStorage: SessionStorage
 ): ViewModel() {
+    var state by mutableStateOf(HomeState())
+        private set
 
-    private val _homeState = MutableStateFlow<HomeState>(HomeState.Loading)
-    val homeState = _homeState.asStateFlow()
 
     init {
         viewModelScope.launch {
-            sessionStorage.get()?.let { _homeState.value = HomeState.UserData(it) }
+            sessionStorage.get()?.let {
+                state = state.copy(authInfo = it)
+            }
         }
     }
 

@@ -1,0 +1,76 @@
+package com.s2start.home.presentation.ui.components
+
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.displayCutoutPadding
+import androidx.compose.foundation.layout.navigationBarsPadding
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material.BottomNavigation
+import androidx.compose.material.BottomNavigationItem
+import androidx.compose.material.Text
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.IconButtonDefaults
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+import com.s2start.core.presentation.designsystem.R
+
+
+@Preview
+@Composable
+fun BottomBar(){
+    BottomNavigation(
+        modifier = Modifier.displayCutoutPadding(),
+        backgroundColor = MaterialTheme.colorScheme.background
+    ) {
+        menuItems.map { item ->
+            BottomNavigationItem(
+                selected = false,
+                onClick = { },
+                icon = {
+                    Icon(
+                        modifier = Modifier.size(17.dp),
+                        painter = painterResource(item.icon),
+                        contentDescription = item.title,
+                        tint = MaterialTheme.colorScheme.primary
+                    )
+                },
+                label = {
+                    Text(
+                        text = item.title.orEmpty(),
+                        fontWeight = FontWeight.Normal,
+                        color = MaterialTheme.colorScheme.primary,
+                        fontSize = 10.sp,
+                        modifier = Modifier.padding(top = 6.dp)
+                    )
+                }
+            )
+        }
+    }
+}
+
+private data class ItemMenu(
+    val icon:Int,
+    val title:String? = null,
+    val isRounded:Boolean = false
+)
+
+private var menuItems = listOf(
+    ItemMenu(R.drawable.ic_home, "Biblia"),
+    ItemMenu(R.drawable.ic_map, "Mapas"),
+    ItemMenu(R.drawable.ic_menu_cut,"Corte"),
+    ItemMenu(R.drawable.ic_message, "Mensagem"),
+    ItemMenu(R.drawable.ic_user, "User")
+)

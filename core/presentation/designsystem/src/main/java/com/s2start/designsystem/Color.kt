@@ -21,8 +21,15 @@ val CardPro = Color(0xFFE9B35E)
 
 
 val inputColorDark = Color(0xFFFFFFFF)
-val backgroundColorDark = Color(0xFF333333)
+val backgroundColorDark = Color(0xFF0D0D12)
 val backgroundColorLight = Color(0xFFFFFFFF)
 
 val cardTimeColor = Color(0xFFBAE1FF)
 val cardDateColor = Color(0xFFBAFFC9)
+
+val yellow = Color(0xFFFDB800)
+val yellowSecondary = Color(0xFFFDF6E4)
+
+
+val primaryDark = Color(0xFF2F2F3B)
+val secondaryDark = Color(0xFF656C7F)

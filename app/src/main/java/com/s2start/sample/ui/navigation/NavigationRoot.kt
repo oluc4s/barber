@@ -9,6 +9,7 @@ import androidx.navigation.navigation
 import com.s2start.auth.presentation.ui.login.LoginScreenRoot
 import com.s2start.auth.presentation.ui.recover.RecoverScreenRoot
 import com.s2start.auth.presentation.ui.register.RegisterScreenRoot
+import com.s2start.home.presentation.ui.detail.DetailScreenRoot
 import com.s2start.home.presentation.ui.home.HomeScreenRoot
 import com.s2start.sample.data.model.Routes
 
