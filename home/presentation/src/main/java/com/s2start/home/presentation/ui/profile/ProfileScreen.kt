@@ -24,6 +24,7 @@ import com.s2start.designsystem.AlpacaTheme
 import com.s2start.designsystem.urbanistFamily
 import com.s2start.domain.Routes
 import com.s2start.home.presentation.ui.components.BottomBar
+import com.s2start.home.presentation.ui.components.TopBar
 
 @Composable
 fun ProfileScreenRoot(
@@ -40,7 +41,7 @@ fun ProfileScreen(
     onLogoutClick: () -> Unit = {}
     ) {
     Screen(
-        topBar = { TopBar() },
+        topBar = { TopBar("Configuracao") },
         bottomBar = { BottomBar(onNavigate = onNavigate) },
         containerColor = MaterialTheme.colorScheme.background
     ) {
@@ -90,46 +91,7 @@ fun ItemMenu(icon:Int,item:String,onClick: () -> Unit = {}){
 }
 
 
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun TopBar(){
-    TopAppBar(
-        title = {
-            Text(
-                text = "Configuracao",
-                style = MaterialTheme.typography.titleSmall,
-                fontFamily = urbanistFamily,
-                fontWeight = FontWeight.SemiBold,
-                color = MaterialTheme.colorScheme.primary
-            )
-        },
-        actions = {
-            IconButton(onClick = {
 
-            }) {
-                Icon(
-                    painter = painterResource(id = R.drawable.ic_search),
-                    null,
-                    tint = MaterialTheme.colorScheme.primary,
-                    modifier = Modifier.size(20.dp)
-                )
-            }
-            IconButton(onClick = {
-
-            }) {
-                Icon(
-                    painter = painterResource(id = R.drawable.ic_dot_menu),
-                    null,
-                    tint = MaterialTheme.colorScheme.primary,
-                    modifier = Modifier.size(20.dp)
-                )
-            }
-        },
-        colors = TopAppBarDefaults.topAppBarColors(
-            containerColor = MaterialTheme.colorScheme.background
-        )
-    )
-}
 
 @PreviewLightDark
 @Composable

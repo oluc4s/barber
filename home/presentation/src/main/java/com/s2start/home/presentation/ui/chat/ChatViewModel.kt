@@ -1,4 +1,4 @@
-package com.s2start.home.presentation.ui.home
+package com.s2start.home.presentation.ui.chat
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -9,11 +9,11 @@ import com.s2start.domain.SessionStorage
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
-class HomeViewModel(
+class ChatViewModel(
     private val applicationScope: CoroutineScope,
     private val sessionStorage: SessionStorage
 ): ViewModel() {
-    var state by mutableStateOf(HomeState())
+    var state by mutableStateOf(ChatState())
         private set
 
 
@@ -33,9 +33,9 @@ class HomeViewModel(
         }
     }
 
-    fun onAction(action: HomeAction) {
+    fun onAction(action: ChatAction) {
         when(action) {
-            HomeAction.OnLogoutClick -> logout()
+            ChatAction.OnLogoutClick -> logout()
             else -> Unit
         }
     }

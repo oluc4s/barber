@@ -12,6 +12,8 @@ sealed interface Routes {
     @Serializable
     data object ProfileScreen : Routes
     @Serializable
+    data object ChatScreen : Routes
+    @Serializable
     data object HomeNavigation: Routes
     @Serializable
     data object Recover: Routes

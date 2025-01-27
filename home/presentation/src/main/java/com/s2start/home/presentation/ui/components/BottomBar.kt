@@ -75,6 +75,6 @@ private var menuItems = listOf(
     ItemMenu(R.drawable.ic_home, "Biblia", routes = Routes.HomeScreen),
     ItemMenu(R.drawable.ic_map, "Mapas", routes = Routes.HomeScreen),
     ItemMenu(R.drawable.ic_menu_cut,"Corte", routes = Routes.HomeScreen),
-    ItemMenu(R.drawable.ic_message, "Mensagem", routes = Routes.HomeScreen),
+    ItemMenu(R.drawable.ic_message, "Mensagem", routes = Routes.ChatScreen),
     ItemMenu(R.drawable.ic_user, "User", routes = Routes.ProfileScreen)
 )

@@ -1,6 +1,5 @@
 package com.s2start.home.presentation.ui.home
 
-import android.media.RouteListingPreference.Item
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Text
@@ -9,25 +8,24 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.s2start.core.presentation.designsystem.R
 import com.s2start.designsystem.components.screen.Screen
 import org.koin.androidx.compose.koinViewModel
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.BottomNavigation
 import androidx.compose.material3.*
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.TextFieldValue
@@ -37,6 +35,7 @@ import com.s2start.designsystem.AlpacaTheme
 import com.s2start.designsystem.backgroundColorDark
 import com.s2start.designsystem.urbanistFamily
 import com.s2start.domain.Routes
+import com.s2start.home.presentation.ui.chat.ChatState
 import com.s2start.home.presentation.ui.components.BottomBar
 import com.s2start.home.presentation.ui.components.CardBarber
 import com.s2start.home.presentation.ui.components.CardResumeBarber
@@ -60,12 +59,38 @@ fun HomeScreen(
     state: HomeState,
     onNavigate: (Routes) -> Unit = {}
 ) {
+    val listState = rememberLazyListState()
+    var scrollDirection by remember { mutableStateOf("") }
+    var previousFirstVisibleIndex by remember { mutableStateOf(0) }
+    var previousScrollOffset by remember { mutableStateOf(0) }
+
+    LaunchedEffect(listState) {
+        snapshotFlow { listState.firstVisibleItemIndex to listState.firstVisibleItemScrollOffset }
+            .collect { (currentIndex, currentOffset) ->
+                if (currentIndex > previousFirstVisibleIndex ||
+                    (currentIndex == previousFirstVisibleIndex && currentOffset > previousScrollOffset)
+                ) {
+                    scrollDirection = "Scrolling Down"
+                } else if (currentIndex < previousFirstVisibleIndex ||
+                    (currentIndex == previousFirstVisibleIndex && currentOffset < previousScrollOffset)
+                ) {
+                    scrollDirection = "Scrolling Up"
+                }
+                previousFirstVisibleIndex = currentIndex
+                previousScrollOffset = currentOffset
+            }
+    }
+
+
     Screen(
         topBar = { TopBar(state = state) },
         bottomBar = { BottomBar(onNavigate) },
         containerColor = MaterialTheme.colorScheme.background
     ) {
-        LazyColumn(modifier = Modifier.fillMaxSize()) {
+        LazyColumn(
+            modifier = Modifier.fillMaxSize(),
+            state = listState,
+            ) {
             item { QuickActions() }
             item { SectionTitle("Meus Agendamentos") }
             item { CardBarber() }
@@ -95,7 +120,7 @@ fun QuickActions(){
 
 
 @Composable
-fun TopBar(state: HomeState) {
+private fun TopBar(state: HomeState) {
     val (search,setSearch) = remember { mutableStateOf(TextFieldValue()) }
     Column(
         modifier = Modifier
