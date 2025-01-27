@@ -8,6 +8,7 @@ android {
     namespace = "com.s2start.sample"
 
     defaultConfig {
+        buildConfigField("String", "MAPS_API_KEY", "\"AIzaSyCJ6vZIi0CDim1feYIX4BaiJ2rObKQwd0g\"")
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
             useSupportLibrary = true

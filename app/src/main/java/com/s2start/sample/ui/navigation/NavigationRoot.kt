@@ -13,6 +13,8 @@ import com.s2start.home.presentation.ui.home.HomeScreenRoot
 import com.s2start.home.presentation.ui.profile.ProfileScreen
 import com.s2start.domain.Routes
 import com.s2start.home.presentation.ui.chat.ChatScreenRoot
+import com.s2start.home.presentation.ui.cut.CutScreenRoot
+import com.s2start.home.presentation.ui.maps.MapScreenRoot
 import com.s2start.home.presentation.ui.profile.ProfileScreenRoot
 
 @Composable
@@ -125,6 +127,12 @@ private fun NavGraphBuilder.homeGraph(navController: NavHostController) {
         }
         composable<Routes.ChatScreen> {
             ChatScreenRoot(onNavigate = { navController.navigate(it) })
+        }
+        composable<Routes.CutScreen> {
+            CutScreenRoot(onNavigate = { navController.navigate(it) })
+        }
+        composable<Routes.MapScreen> {
+            MapScreenRoot(onNavigate = { navController.navigate(it) })
         }
     }
 }

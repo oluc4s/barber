@@ -14,6 +14,10 @@ sealed interface Routes {
     @Serializable
     data object ChatScreen : Routes
     @Serializable
+    data object CutScreen : Routes
+    @Serializable
+    data object MapScreen : Routes
+    @Serializable
     data object HomeNavigation: Routes
     @Serializable
     data object Recover: Routes

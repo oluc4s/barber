@@ -29,7 +29,6 @@ import com.s2start.designsystem.urbanistFamily
 import com.s2start.domain.Routes
 import com.s2start.home.presentation.ui.components.BottomBar
 import com.s2start.home.presentation.ui.components.TopBar
-import com.s2start.home.presentation.ui.home.HomeViewModel
 import org.koin.androidx.compose.koinViewModel
 
 

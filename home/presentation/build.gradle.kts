@@ -14,4 +14,5 @@ dependencies {
     implementation(libs.timber)
 
     implementation(projects.core.domain)
+    implementation("com.google.maps.android:maps-compose:6.4.0")
 }

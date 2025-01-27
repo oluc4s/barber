@@ -23,6 +23,8 @@ class AndroidApplicationConventionPlugin : Plugin<Project> {
 
                     versionCode = libs.findVersion("projectVersionCode").get().toString().toInt()
                     versionName = libs.findVersion("projectVersionName").get().toString()
+                    buildConfigField("String", "MAPS_API_KEY", "\"AIzaSyCJ6vZIi0CDim1feYIX4BaiJ2rObKQwd0g\"")
+
                 }
 
                 configureKotlinAndroid(this)
