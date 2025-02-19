@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Text
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
@@ -15,10 +16,13 @@ import com.s2start.designsystem.urbanistFamily
 import com.s2start.designsystem.yellow
 
 @Composable
-fun SectionTitle(title: String){
+fun SectionTitle(
+    title: String,
+    onClick:() -> Unit = {}
+){
     Row (
         horizontalArrangement = Arrangement.SpaceBetween,
-        modifier = Modifier.fillMaxWidth().padding(horizontal = 12.dp)
+        modifier = Modifier.fillMaxWidth().padding(horizontal = 12.dp),
     ){
         Text(
             text = title,
@@ -29,15 +33,16 @@ fun SectionTitle(title: String){
             color = MaterialTheme.colorScheme.primary,
             fontSize = 16.sp
         )
-
-        Text(
-            text = "See all",
-            style = MaterialTheme.typography.titleMedium,
-            fontFamily = urbanistFamily,
-            fontWeight = FontWeight.Bold,
-            modifier = Modifier.padding(top = 8.dp, bottom = 8.dp),
-            color = yellow,
-            fontSize = 14.sp
-        )
+        TextButton(onClick = onClick) {
+            Text(
+                text = "See all",
+                style = MaterialTheme.typography.titleMedium,
+                fontFamily = urbanistFamily,
+                fontWeight = FontWeight.Bold,
+                modifier = Modifier.padding(top = 8.dp, bottom = 8.dp),
+                color = yellow,
+                fontSize = 14.sp
+            )
+        }
     }
 }

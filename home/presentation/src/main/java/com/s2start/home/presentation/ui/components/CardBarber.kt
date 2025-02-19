@@ -1,7 +1,14 @@
 package com.s2start.home.presentation.ui.components
 
+import androidx.compose.animation.animateColor
+import androidx.compose.animation.core.FastOutSlowInEasing
+import androidx.compose.animation.core.animateFloat
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.core.updateTransition
+import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -20,21 +27,33 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.geometry.CornerRadius
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.s2start.core.presentation.designsystem.R
+import com.s2start.designsystem.AlpacaTheme
 import com.s2start.designsystem.yellow
+import com.s2start.home.presentation.model.BarberResumeUi
+import com.s2start.home.presentation.model.BarberUi
+import com.s2start.home.presentation.model.mockBarberResume
 
 
 @Composable
-fun CardResumeBarber(){
+fun CardResumeBarber(barber: BarberResumeUi){
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -52,7 +71,7 @@ fun CardResumeBarber(){
                 verticalAlignment = Alignment.CenterVertically,
             ) {
                 Image(
-                    painter = painterResource(R.drawable.img_moc_barber),
+                    painter = painterResource(barber.image),
                     contentDescription = "Barbearia",
                     modifier = Modifier
                         .size(50.dp)
@@ -65,14 +84,14 @@ fun CardResumeBarber(){
                     horizontalAlignment = Alignment.Start,
                 ) {
                     Text(
-                        text = "Barbearia Trindade",
+                        text = barber.name,
                         color = MaterialTheme.colorScheme.primary,
                         style = MaterialTheme.typography.titleMedium,
                         fontWeight = FontWeight.Bold,
                         fontSize = 16.sp
                     )
                     Text(
-                        text = "Rua Marechal falconieri, 538,Europa",
+                        text = barber.address,
                         color = MaterialTheme.colorScheme.secondary,
                         style = MaterialTheme.typography.bodySmall,
                     )
@@ -84,7 +103,7 @@ fun CardResumeBarber(){
                             modifier = Modifier.padding(end = 3.dp)
                         )
                         Text(
-                            text = "1.2 km",
+                            text = "${barber.distance} km",
                             color = MaterialTheme.colorScheme.secondary,
                             style = MaterialTheme.typography.bodySmall,
                         )
@@ -95,7 +114,7 @@ fun CardResumeBarber(){
                             modifier = Modifier.padding(horizontal = 3.dp)
                         )
                         Text(
-                            text = "4.8",
+                            text = barber.rating.toString(),
                             color = MaterialTheme.colorScheme.secondary,
                             style = MaterialTheme.typography.bodySmall,
                         )
@@ -107,7 +126,7 @@ fun CardResumeBarber(){
 }
 
 @Composable
-fun CardBarber(){
+fun CardBarber(barber: BarberUi){
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -157,7 +176,7 @@ fun CardBarber(){
                 verticalAlignment = Alignment.CenterVertically,
             ) {
                 Image(
-                    painter = painterResource(R.drawable.img_moc_barber),
+                    painter = painterResource(barber.image),
                     contentDescription = "Barbearia",
                     modifier = Modifier
                         .width(80.dp)
@@ -171,14 +190,14 @@ fun CardBarber(){
                     horizontalAlignment = Alignment.Start,
                 ) {
                     Text(
-                        text = "Barbearia Trindade",
+                        text = barber.name,
                         color = MaterialTheme.colorScheme.primary,
                         style = MaterialTheme.typography.titleMedium,
                         fontWeight = FontWeight.Bold,
                         fontSize = 16.sp
                     )
                     Text(
-                        text = "Rua Marechal falconieri, 538,Europa",
+                        text = barber.address,
                         color = MaterialTheme.colorScheme.secondary,
                         style = MaterialTheme.typography.bodySmall,
                     )
@@ -213,5 +232,31 @@ fun CardBarber(){
                 )
             }
         }
+    }
+}
+
+
+
+@PreviewLightDark
+@Composable
+fun CardBarberPreview(){
+    AlpacaTheme {
+        CardBarber(
+            BarberUi(
+                name = "Barbearia Trindade",
+                address = "Rua Marechal falconieri, 538,Europa",
+                image = R.drawable.img_moc_barber,
+                services = "Corte de cabelo com corte inferior, barbear regular, lavagem natural do cabelo",
+                rating = 5.2
+            )
+        )
+    }
+}
+
+@PreviewLightDark
+@Composable
+fun CardResumeBarberPreview(){
+    AlpacaTheme {
+        CardResumeBarber(mockBarberResume)
     }
 }

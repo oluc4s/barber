@@ -16,7 +16,7 @@ sealed interface Routes {
     @Serializable
     data object CutScreen : Routes
     @Serializable
-    data object MapScreen : Routes
+    data object BarberShopsScreen : Routes
     @Serializable
     data object HomeNavigation: Routes
     @Serializable

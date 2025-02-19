@@ -52,7 +52,7 @@ fun ChatScreen(
     val item = ChatData("Marcones","Vou ir terca feira as 19:00",R.drawable.im_user_mock,"19:00")
     Screen (
         topBar = { TopBar("Chat") },
-        bottomBar = { BottomBar(onNavigate) },
+        bottomBar = { BottomBar(onNavigate,selectableRoute = Routes.ChatScreen) },
         containerColor = MaterialTheme.colorScheme.background
     ) {
         LazyColumn(modifier = Modifier.fillMaxSize()) {

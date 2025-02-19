@@ -9,11 +9,11 @@ import com.s2start.domain.SessionStorage
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
-class MapViewModel(
+class BarberShopsViewModel(
     private val applicationScope: CoroutineScope,
     private val sessionStorage: SessionStorage
 ): ViewModel() {
-    var state by mutableStateOf(MapState())
+    var state by mutableStateOf(BarberShopsState())
         private set
 
 
@@ -33,9 +33,9 @@ class MapViewModel(
         }
     }
 
-    fun onAction(action: MapAction) {
+    fun onAction(action: BarberShopsAction) {
         when(action) {
-            MapAction.OnLogoutClick -> logout()
+            BarberShopsAction.OnLogoutClick -> logout()
             else -> Unit
         }
     }

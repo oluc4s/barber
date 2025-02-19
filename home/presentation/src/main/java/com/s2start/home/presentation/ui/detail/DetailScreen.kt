@@ -44,17 +44,21 @@ fun DetailScreen() {
             contentScale = ContentScale.Crop,
             modifier = Modifier
                 .fillMaxWidth()
-                .height(300.dp)
+                .height(330.dp)
+
 
         )
         Column(
             modifier = Modifier
-                .offset(y = (-30).dp)
+                .fillMaxSize()
                 .clip(RoundedCornerShape(topEnd = 32.dp, topStart = 32.dp))
                 .background(Color.White)
-                .fillMaxSize()
+                .offset(y = (-30).dp)
+
         ) {
-            Column {
+            Column(
+                modifier = Modifier.weight(1f)
+            ) {
                 Text("asdsa")
             }
         }

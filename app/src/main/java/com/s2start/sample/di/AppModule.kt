@@ -1,5 +1,6 @@
 package com.s2start.sample.di
 
+import android.content.Context
 import android.content.SharedPreferences
 import androidx.security.crypto.EncryptedSharedPreferences
 import androidx.security.crypto.MasterKey
@@ -22,6 +23,9 @@ val appModule = module {
     }
     single<CoroutineScope> {
         (androidApplication() as SampleApp).applicationScope
+    }
+    single<Context> {
+        (androidApplication() as SampleApp).applicationContext
     }
     viewModelOf(::MainViewModel)
 }

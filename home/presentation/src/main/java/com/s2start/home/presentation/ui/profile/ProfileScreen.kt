@@ -42,7 +42,7 @@ fun ProfileScreen(
     ) {
     Screen(
         topBar = { TopBar("Configuracao") },
-        bottomBar = { BottomBar(onNavigate = onNavigate) },
+        bottomBar = { BottomBar(onNavigate = onNavigate,selectableRoute = Routes.ProfileScreen) },
         containerColor = MaterialTheme.colorScheme.background
     ) {
         Column(modifier = Modifier.padding(horizontal = 12.dp)){

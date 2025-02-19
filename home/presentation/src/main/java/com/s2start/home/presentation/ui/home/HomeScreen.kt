@@ -14,6 +14,7 @@ import org.koin.androidx.compose.koinViewModel
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -35,12 +36,13 @@ import com.s2start.designsystem.AlpacaTheme
 import com.s2start.designsystem.backgroundColorDark
 import com.s2start.designsystem.urbanistFamily
 import com.s2start.domain.Routes
-import com.s2start.home.presentation.ui.chat.ChatState
+import com.s2start.home.presentation.model.mockBarber
 import com.s2start.home.presentation.ui.components.BottomBar
 import com.s2start.home.presentation.ui.components.CardBarber
 import com.s2start.home.presentation.ui.components.CardResumeBarber
 import com.s2start.home.presentation.ui.components.QuickActionButton
 import com.s2start.home.presentation.ui.components.SectionTitle
+import kotlinx.coroutines.Job
 
 @Composable
 fun HomeScreenRoot(
@@ -62,7 +64,14 @@ fun HomeScreen(
     val listState = rememberLazyListState()
     var scrollDirection by remember { mutableStateOf("") }
     var previousFirstVisibleIndex by remember { mutableStateOf(0) }
+    var showMenuTop by remember { mutableStateOf(true) }
     var previousScrollOffset by remember { mutableStateOf(0) }
+    var job by remember { mutableStateOf<Job?>(null) }
+    val search = remember { mutableStateOf<String>("") }
+    val isSearching = search.value.isNotEmpty()
+    val listBarber = state.barberResumeUi.filter {
+        it.name.contains(search.value, ignoreCase = true)
+    }.sortedBy { it.distance }
 
     LaunchedEffect(listState) {
         snapshotFlow { listState.firstVisibleItemIndex to listState.firstVisibleItemScrollOffset }
@@ -70,12 +79,14 @@ fun HomeScreen(
                 if (currentIndex > previousFirstVisibleIndex ||
                     (currentIndex == previousFirstVisibleIndex && currentOffset > previousScrollOffset)
                 ) {
-                    scrollDirection = "Scrolling Down"
+                    showMenuTop = false
                 } else if (currentIndex < previousFirstVisibleIndex ||
                     (currentIndex == previousFirstVisibleIndex && currentOffset < previousScrollOffset)
                 ) {
-                    scrollDirection = "Scrolling Up"
+                    showMenuTop = true
                 }
+
+
                 previousFirstVisibleIndex = currentIndex
                 previousScrollOffset = currentOffset
             }
@@ -83,20 +94,27 @@ fun HomeScreen(
 
 
     Screen(
-        topBar = { TopBar(state = state) },
-        bottomBar = { BottomBar(onNavigate) },
+        topBar = {
+            if(showMenuTop){ TopBar(state = state){ search.value = it} }
+                 },
+        bottomBar = { BottomBar(onNavigate,Routes.HomeScreen) },
         containerColor = MaterialTheme.colorScheme.background
     ) {
         LazyColumn(
             modifier = Modifier.fillMaxSize(),
             state = listState,
             ) {
-            item { QuickActions() }
-            item { SectionTitle("Meus Agendamentos") }
-            item { CardBarber() }
-            item { SectionTitle("Barbearias Recomendadas") }
-            items(10){
-                CardResumeBarber()
+            if(!isSearching){
+                item { QuickActions() }
+                item { SectionTitle("Meus Agendamentos"){ onNavigate(Routes.CutScreen) } }
+                item { CardBarber(mockBarber) }
+                item { SectionTitle("Barbearias Recomendadas"){ onNavigate(Routes.BarberShopsScreen) } }
+            }else{
+                item { SectionTitle("Barbearias"){ onNavigate(Routes.BarberShopsScreen) } }
+            }
+
+            items(listBarber){
+                CardResumeBarber(it)
             }
         }
     }
@@ -120,7 +138,7 @@ fun QuickActions(){
 
 
 @Composable
-private fun TopBar(state: HomeState) {
+private fun TopBar(state: HomeState,search: (String) -> Unit = {}) {
     val (search,setSearch) = remember { mutableStateOf(TextFieldValue()) }
     Column(
         modifier = Modifier
@@ -129,7 +147,6 @@ private fun TopBar(state: HomeState) {
             .background(backgroundColorDark)
             .padding(16.dp)
             .displayCutoutPadding()
-            .imePadding()
     ) {
         Row (verticalAlignment = Alignment.CenterVertically,
             modifier = Modifier.padding(top = 20.dp)){
@@ -171,7 +188,10 @@ private fun TopBar(state: HomeState) {
 
         TextField(
             value = search,
-            onValueChange = setSearch,
+            onValueChange = {
+                setSearch(it)
+                search(it.text)
+            },
             placeholder = {
                 Text(
                     text = "Pesquisar",
