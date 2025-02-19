@@ -1,4 +1,4 @@
-package com.s2start.home.presentation.ui.maps
+package com.s2start.home.presentation.ui.barbershops
 
 import com.s2start.domain.AuthInfo
 

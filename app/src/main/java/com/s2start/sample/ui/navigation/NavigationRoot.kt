@@ -13,7 +13,7 @@ import com.s2start.home.presentation.ui.home.HomeScreenRoot
 import com.s2start.domain.Routes
 import com.s2start.home.presentation.ui.chat.ChatScreenRoot
 import com.s2start.home.presentation.ui.cut.CutScreenRoot
-import com.s2start.home.presentation.ui.maps.BarberShopsScreenRoot
+import com.s2start.home.presentation.ui.barbershops.BarberShopsScreenRoot
 import com.s2start.home.presentation.ui.profile.ProfileScreenRoot
 
 @Composable
