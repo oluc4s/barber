@@ -5,7 +5,10 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -31,6 +34,7 @@ import com.s2start.designsystem.urbanistFamily
 import com.s2start.designsystem.yellow
 import com.s2start.domain.Routes
 import com.s2start.home.presentation.ui.components.BottomBar
+import com.s2start.home.presentation.ui.components.CardResumeBarber
 import com.s2start.home.presentation.ui.components.TopBar
 import org.koin.androidx.compose.koinViewModel
 
@@ -58,6 +62,7 @@ fun BarberShopsScreen(
         bottomBar = { BottomBar(onNavigate,selectableRoute = Routes.BarberShopsScreen) },
         containerColor = MaterialTheme.colorScheme.background
     ) {
+        val listBarber = state.barberResumeUi.sortedBy { it.distance }
 
         val singapore = LatLng(-19.8022711, -43.971175)
         val cameraPositionState = rememberCameraPositionState {
@@ -72,7 +77,7 @@ fun BarberShopsScreen(
                 list.map { item ->
                     val isSelected = item == selected.value
                     val colors = if(isSelected) yellow else MaterialTheme.colorScheme.secondary
-                    val paddingDivider = if(isSelected) 3.dp else 2.dp
+                    val paddingDivider = if(isSelected) 3.dp else 1.dp
                     Column(
                         modifier = Modifier
                             .weight(1f)
@@ -90,13 +95,22 @@ fun BarberShopsScreen(
                         )
                         HorizontalDivider(
                             color = colors,
-                            thickness = paddingDivider
+                            thickness = paddingDivider,
+                            modifier = Modifier.height(3.dp),
                         )
                     }
                 }
             }
             when(selected.value){
-                "Lista" -> Unit
+                "Lista" -> {
+                    LazyColumn(
+                        modifier = Modifier.fillMaxSize(),
+                    ) {
+                        items(listBarber) {
+                            CardResumeBarber(it)
+                        }
+                    }
+                }
                 "Mapa" -> {
                 GoogleMap(
                     modifier = Modifier.fillMaxSize(),
