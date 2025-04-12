@@ -11,9 +11,10 @@ import com.s2start.auth.presentation.ui.recover.RecoverScreenRoot
 import com.s2start.auth.presentation.ui.register.RegisterScreenRoot
 import com.s2start.home.presentation.ui.home.HomeScreenRoot
 import com.s2start.domain.Routes
+import com.s2start.home.presentation.ui.barbershops.create.BarberShopCreateScreenRoot
 import com.s2start.home.presentation.ui.chat.ChatScreenRoot
 import com.s2start.home.presentation.ui.cut.CutScreenRoot
-import com.s2start.home.presentation.ui.barbershops.BarberShopsScreenRoot
+import com.s2start.home.presentation.ui.barbershops.list.BarberShopsScreenRoot
 import com.s2start.home.presentation.ui.profile.ProfileScreenRoot
 
 @Composable
@@ -122,6 +123,12 @@ private fun NavGraphBuilder.homeGraph(navController: NavHostController) {
                         }
                     }
                 }
+            )
+        }
+        composable<Routes.BarberShopsCreateScreen> {
+            BarberShopCreateScreenRoot(
+                onNavigate = { navController.navigate(it) },
+                onBack = { navController.popBackStack() }
             )
         }
         composable<Routes.ChatScreen> {

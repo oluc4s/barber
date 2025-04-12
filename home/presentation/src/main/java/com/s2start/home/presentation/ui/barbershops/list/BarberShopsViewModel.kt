@@ -1,4 +1,4 @@
-package com.s2start.home.presentation.ui.barbershops
+package com.s2start.home.presentation.ui.barbershops.list
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -6,13 +6,16 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.s2start.domain.SessionStorage
+import com.s2start.domain.util.ModelResult.Companion.onSuccess
+import com.s2start.home.domain.usecase.GetListBarberUseCase
 import com.s2start.home.presentation.model.mockBarberResumeList
+import com.s2start.home.presentation.model.toUiListModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
 class BarberShopsViewModel(
-    private val applicationScope: CoroutineScope,
-    private val sessionStorage: SessionStorage
+    private val sessionStorage: SessionStorage,
+    private val getListBarberUseCase: GetListBarberUseCase
 ): ViewModel() {
     var state by mutableStateOf(BarberShopsState())
         private set
@@ -29,20 +32,14 @@ class BarberShopsViewModel(
 
     private fun fetchBarberCoordinates(){
         viewModelScope.launch {
-            state = state.copy(barberResumeUi = mockBarberResumeList.toMutableList())
-        }
-    }
-
-
-    private fun logout() {
-        applicationScope.launch {
-            sessionStorage.set(null)
+            getListBarberUseCase.invoke().onSuccess {
+                state = state.copy(barberResumeUi = it.toUiListModel().toMutableList())
+            }
         }
     }
 
     fun onAction(action: BarberShopsAction) {
         when(action) {
-            BarberShopsAction.OnLogoutClick -> logout()
             else -> Unit
         }
     }

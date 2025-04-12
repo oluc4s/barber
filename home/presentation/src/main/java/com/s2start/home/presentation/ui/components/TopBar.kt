@@ -18,7 +18,11 @@ import com.s2start.designsystem.urbanistFamily
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun TopBar(title:String){
+fun TopBar(
+    title:String,
+    onClickDot:(() -> Unit)? = null,
+    onBackButton:(() -> Unit)? = null
+){
     TopAppBar(
         title = {
             Text(
@@ -40,15 +44,32 @@ fun TopBar(title:String){
                     modifier = Modifier.size(20.dp)
                 )
             }
-            IconButton(onClick = {
+            onClickDot?.let {
+                IconButton(onClick = {
+                    onClickDot.invoke()
+                }) {
+                    Icon(
+                        painter = painterResource(id = R.drawable.ic_dot_menu),
+                        null,
+                        tint = MaterialTheme.colorScheme.primary,
+                        modifier = Modifier.size(20.dp)
+                    )
+                }
+            }
 
-            }) {
-                Icon(
-                    painter = painterResource(id = R.drawable.ic_dot_menu),
-                    null,
-                    tint = MaterialTheme.colorScheme.primary,
-                    modifier = Modifier.size(20.dp)
-                )
+        },
+        navigationIcon = {
+            onBackButton?.let {
+                IconButton(onClick = {
+                    it.invoke()
+                }) {
+                    Icon(
+                        painter = painterResource(id = R.drawable.ic_arrow_prev_small),
+                        null,
+                        tint = MaterialTheme.colorScheme.primary,
+                        modifier = Modifier.size(20.dp)
+                    )
+                }
             }
         },
         colors = TopAppBarDefaults.topAppBarColors(

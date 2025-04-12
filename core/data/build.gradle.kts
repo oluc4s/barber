@@ -10,6 +10,8 @@ android {
 dependencies {
     implementation(libs.timber)
     implementation(libs.bundles.koin)
-    implementation(libs.firebase.auth)
     implementation(projects.core.domain)
+    implementation(libs.firebase.auth)
+    implementation(platform(libs.firebase.boom))
+    implementation(libs.firebase.firestore)
 }

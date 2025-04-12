@@ -18,6 +18,8 @@ sealed interface Routes {
     @Serializable
     data object BarberShopsScreen : Routes
     @Serializable
+    data object BarberShopsCreateScreen : Routes
+    @Serializable
     data object HomeNavigation: Routes
     @Serializable
     data object Recover: Routes

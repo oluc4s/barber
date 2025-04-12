@@ -1,6 +1,7 @@
 package com.s2start.home.presentation.model
 
 import com.s2start.core.presentation.designsystem.R
+import com.s2start.home.domain.model.BarberModel
 
 data class BarberResumeUi(
     val name:String,
@@ -13,6 +14,26 @@ data class BarberResumeUi(
     val longitude:Double = 0.0
 )
 
+fun BarberModel.toUiModel() = BarberResumeUi(
+    name = name,
+    address = address,
+    distance = distance,
+    latitude = latitude,
+    longitude = longitude,
+    services = services,
+    rating = rating
+)
+fun List<BarberModel>.toUiListModel() = this.map {
+    BarberResumeUi(
+        name = it.name,
+        address = it.address,
+        distance = it.distance,
+        latitude = it.latitude,
+        longitude = it.longitude,
+        services = it.services,
+        rating = it.rating
+    )
+}
 
 
 val mockBarberResumeList = arrayOf(

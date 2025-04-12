@@ -21,6 +21,7 @@ import com.s2start.home.domain.usecase.CreateBarberUseCase
 import com.s2start.home.domain.usecase.GetListBarberUseCase
 import com.s2start.home.presentation.model.BarberResumeUi
 import com.s2start.home.presentation.model.mockBarberResumeList
+import com.s2start.home.presentation.model.toUiListModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -45,29 +46,6 @@ class HomeViewModel(
 
     var state by mutableStateOf(HomeState())
         private set
-
-
-    fun BarberModel.toUiModel() = BarberResumeUi(
-        name = name,
-        address = address,
-        distance = distance,
-        latitude = latitude,
-        longitude = longitude,
-        services = services,
-        rating = rating
-    )
-    fun List<BarberModel>.toUiListModel() = this.map {
-        BarberResumeUi(
-            name = it.name,
-            address = it.address,
-            distance = it.distance,
-            latitude = it.latitude,
-            longitude = it.longitude,
-            services = it.services,
-            rating = it.rating
-        )
-    }
-
 
 
     init {

@@ -1,4 +1,4 @@
-package com.s2start.home.presentation.ui.barbershops
+package com.s2start.home.presentation.ui.barbershops.list
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -58,7 +58,12 @@ fun BarberShopsScreen(
 ) {
     val context = LocalContext.current
     Screen (
-        topBar = { TopBar("Barbearias") },
+        topBar = { TopBar(
+            "Barbearias",
+            onClickDot = {
+                onNavigate.invoke(Routes.BarberShopsCreateScreen)
+            }
+        ) },
         bottomBar = { BottomBar(onNavigate,selectableRoute = Routes.BarberShopsScreen) },
         containerColor = MaterialTheme.colorScheme.background
     ) {
