@@ -13,3 +13,7 @@ fun rememberTextFieldValidation(
     isSecurity:Boolean = false,
     validation: ValidationTextField? = null
 ): TextFieldValidationState = remember { TextFieldValidationState(textfieldState,status,isSecurity,validation)  }
+
+
+val TextFieldValidationState.getText: String
+    get() = this.textfieldState.value.text

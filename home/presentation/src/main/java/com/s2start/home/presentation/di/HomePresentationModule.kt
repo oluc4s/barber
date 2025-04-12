@@ -5,7 +5,6 @@ import com.s2start.home.presentation.ui.chat.ChatViewModel
 import com.s2start.home.presentation.ui.cut.CutViewModel
 import com.s2start.home.presentation.ui.home.HomeViewModel
 import com.s2start.home.presentation.ui.barbershops.list.BarberShopsViewModel
-import org.koin.core.module.dsl.viewModel
 import org.koin.core.module.dsl.viewModelOf
 import org.koin.dsl.module
 

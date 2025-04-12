@@ -28,6 +28,7 @@ val cardTimeColor = Color(0xFFBAE1FF)
 val cardDateColor = Color(0xFFBAFFC9)
 
 val yellow = Color(0xFFFDB800)
+val yellowContent  = Color(0x1AFDB800)
 val yellowSecondary = Color(0xFFFDF6E4)
 
 

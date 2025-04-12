@@ -29,6 +29,8 @@ import com.s2start.core.presentation.designsystem.R
 import com.s2start.designsystem.AlpacaTheme
 import com.s2start.designsystem.Blue
 import com.s2start.designsystem.BlueContent
+import com.s2start.designsystem.yellow
+import com.s2start.designsystem.yellowContent
 
 
 @Composable
@@ -53,8 +55,8 @@ fun ButtonAlpaca(
         shape = RoundedCornerShape(12.dp),
         modifier = modifier.padding(top = 12.dp).fillMaxWidth(),
         colors = ButtonDefaults.buttonColors(
-            containerColor = Blue,
-            disabledContainerColor = BlueContent,
+            containerColor = yellow,
+            disabledContainerColor = yellowContent,
         ),
         enabled = enabled && !isLoading
     ) {
@@ -69,7 +71,7 @@ fun ButtonAlpaca(
                 Text(
                     text = text,
                     fontWeight = FontWeight.SemiBold,
-                    color = if(enabled){ Color.White } else { Blue },
+                    color = if(enabled){ Color.White } else { yellow },
                     modifier = Modifier.padding(6.dp)
                 )
             }
@@ -99,7 +101,7 @@ fun ButtonOutLineAlpaca(
     OutlinedButton(
         onClick = onClick,
         shape = RoundedCornerShape(12.dp),
-        border = BorderStroke(1.dp, Blue),
+        border = BorderStroke(1.dp, yellow),
         modifier = modifier.padding(top = 12.dp).fillMaxWidth(),
         enabled = enabled && !isLoading
     ) {
@@ -114,7 +116,7 @@ fun ButtonOutLineAlpaca(
                 Text(
                     text = text,
                     fontWeight = FontWeight.SemiBold,
-                    color = Blue,
+                    color = yellow,
                     modifier = Modifier.padding(6.dp)
                 )
             }
