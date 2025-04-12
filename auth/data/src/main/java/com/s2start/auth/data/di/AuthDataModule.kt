@@ -1,6 +1,6 @@
 package com.s2start.auth.data.di
 
-import com.s2start.data.firebase.AuthFirebase
+import com.s2start.auth.domain.firebase.AuthFirebase
 import com.s2start.auth.data.firebase.AuthFirebaseImpl
 import com.s2start.auth.data.repository.AuthRepositoryImpl
 import com.s2start.auth.domain.repository.AuthRepository

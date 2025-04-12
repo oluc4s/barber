@@ -1,5 +1,5 @@
 package com.s2start.auth.data.repository
-import com.s2start.data.firebase.AuthFirebase
+import com.s2start.auth.domain.firebase.AuthFirebase
 import com.s2start.auth.domain.model.AccountModel
 import com.s2start.auth.domain.repository.AuthRepository
 import com.s2start.domain.util.ModelResult

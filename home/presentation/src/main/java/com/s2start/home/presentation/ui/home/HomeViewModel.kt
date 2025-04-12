@@ -15,6 +15,10 @@ import androidx.lifecycle.viewModelScope
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.model.LatLng
 import com.s2start.domain.SessionStorage
+import com.s2start.domain.util.ModelResult.Companion.onSuccess
+import com.s2start.home.domain.model.BarberModel
+import com.s2start.home.domain.usecase.CreateBarberUseCase
+import com.s2start.home.domain.usecase.GetListBarberUseCase
 import com.s2start.home.presentation.model.BarberResumeUi
 import com.s2start.home.presentation.model.mockBarberResumeList
 import kotlinx.coroutines.CoroutineScope
@@ -29,7 +33,8 @@ import java.net.URL
 class HomeViewModel(
     private val applicationScope: CoroutineScope,
     private val sessionStorage: SessionStorage,
-    private val application: Context
+    private val application: Context,
+    private val getListBarberUseCase: GetListBarberUseCase
 ): ViewModel() {
     private val fusedLocationClient = LocationServices.getFusedLocationProviderClient(application)
 
@@ -42,17 +47,41 @@ class HomeViewModel(
         private set
 
 
+    fun BarberModel.toUiModel() = BarberResumeUi(
+        name = name,
+        address = address,
+        distance = distance,
+        latitude = latitude,
+        longitude = longitude,
+        services = services,
+        rating = rating
+    )
+    fun List<BarberModel>.toUiListModel() = this.map {
+        BarberResumeUi(
+            name = it.name,
+            address = it.address,
+            distance = it.distance,
+            latitude = it.latitude,
+            longitude = it.longitude,
+            services = it.services,
+            rating = it.rating
+        )
+    }
+
+
+
     init {
-        getUserLocation()
-        fetchBarberCoordinates()
+//        getUserLocation()
+//        fetchBarberCoordinates()
         viewModelScope.launch {
             sessionStorage.get()?.let {
                 state = state.copy(authInfo = it)
             }
+            getListBarberUseCase.invoke().onSuccess {
+                state = state.copy(barberResumeUi = it.toUiListModel().toMutableList())
+            }
         }
     }
-
-
 
     private fun logout() {
         applicationScope.launch {

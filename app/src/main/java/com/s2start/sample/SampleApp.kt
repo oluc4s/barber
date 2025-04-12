@@ -12,6 +12,7 @@ import com.s2start.auth.presentation.di.authViewModelModule
 import com.s2start.auth.data.di.authDataModule
 import com.s2start.core.database.di.databaseModule
 import com.s2start.core.presentation.ui.BuildConfig
+import com.s2start.home.data.di.homeDataModule
 import com.s2start.home.presentation.di.homePresentationModule
 import com.s2start.sample.di.appModule
 import kotlinx.coroutines.CoroutineScope
@@ -35,7 +36,8 @@ class SampleApp: Application() {
                 coreDataModule,
                 appModule,
                 homePresentationModule,
-                databaseModule
+                databaseModule,
+                homeDataModule
             )
         }
     }

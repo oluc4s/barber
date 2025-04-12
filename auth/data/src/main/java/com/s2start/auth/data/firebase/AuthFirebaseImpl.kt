@@ -5,7 +5,7 @@ import com.google.firebase.auth.FirebaseAuthException
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import com.google.firebase.auth.FirebaseAuthInvalidUserException
 import com.google.firebase.auth.userProfileChangeRequest
-import com.s2start.data.firebase.AuthFirebase
+import com.s2start.auth.domain.firebase.AuthFirebase
 import com.s2start.auth.domain.model.AccountModel
 import com.s2start.core.data.auth.CredentialsException
 import com.s2start.core.data.auth.InvalidUserException

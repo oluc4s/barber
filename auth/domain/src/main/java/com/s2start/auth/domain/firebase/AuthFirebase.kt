@@ -1,4 +1,4 @@
-package com.s2start.data.firebase
+package com.s2start.auth.domain.firebase
 
 import com.s2start.auth.domain.model.AccountModel
 import com.s2start.domain.util.ModelResult

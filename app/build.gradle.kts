@@ -78,6 +78,8 @@ dependencies {
     implementation(projects.core.database)
     // Home
     implementation(projects.home.presentation)
+    implementation(projects.home.data)
+    implementation(projects.home.domain)
 
     implementation(platform("com.google.firebase:firebase-bom:33.7.0"))
 }

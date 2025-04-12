@@ -5,7 +5,7 @@ import com.s2start.core.presentation.designsystem.R
 data class BarberResumeUi(
     val name:String,
     val address:String,
-    val image:Int,
+    val image:Int = R.drawable.img_moc_barber,
     val services:String,
     val rating:Double = 0.0,
     val distance:Double = 0.0,
