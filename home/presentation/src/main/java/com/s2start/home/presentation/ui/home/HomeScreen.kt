@@ -73,24 +73,24 @@ fun HomeScreen(
         it.name.contains(search.value, ignoreCase = true)
     }.sortedBy { it.distance }
 
-    LaunchedEffect(listState) {
-        snapshotFlow { listState.firstVisibleItemIndex to listState.firstVisibleItemScrollOffset }
-            .collect { (currentIndex, currentOffset) ->
-                if (currentIndex > previousFirstVisibleIndex ||
-                    (currentIndex == previousFirstVisibleIndex && currentOffset > previousScrollOffset)
-                ) {
-                    showMenuTop = false
-                } else if (currentIndex < previousFirstVisibleIndex ||
-                    (currentIndex == previousFirstVisibleIndex && currentOffset < previousScrollOffset)
-                ) {
-                    showMenuTop = true
-                }
-
-
-                previousFirstVisibleIndex = currentIndex
-                previousScrollOffset = currentOffset
-            }
-    }
+//    LaunchedEffect(listState) {
+//        snapshotFlow { listState.firstVisibleItemIndex to listState.firstVisibleItemScrollOffset }
+//            .collect { (currentIndex, currentOffset) ->
+//                if (currentIndex > previousFirstVisibleIndex ||
+//                    (currentIndex == previousFirstVisibleIndex && currentOffset > previousScrollOffset)
+//                ) {
+//                    showMenuTop = false
+//                } else if (currentIndex < previousFirstVisibleIndex ||
+//                    (currentIndex == previousFirstVisibleIndex && currentOffset < previousScrollOffset)
+//                ) {
+//                    showMenuTop = true
+//                }
+//
+//
+//                previousFirstVisibleIndex = currentIndex
+//                previousScrollOffset = currentOffset
+//            }
+//    }
 
 
     Screen(

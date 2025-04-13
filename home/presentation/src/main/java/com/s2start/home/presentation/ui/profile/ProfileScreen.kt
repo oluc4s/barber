@@ -1,6 +1,7 @@
 package com.s2start.home.presentation.ui.profile
 
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -9,12 +10,15 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.runtime.Composable
 import com.s2start.designsystem.components.screen.Screen
 import androidx.compose.material3.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.PreviewLightDark
@@ -47,6 +51,37 @@ fun ProfileScreen(
         containerColor = MaterialTheme.colorScheme.background
     ) {
         Column(modifier = Modifier.padding(horizontal = 12.dp)){
+            Column {
+                Row(modifier = Modifier.padding(vertical = 12.dp)) {
+                    Image(
+                        painter = painterResource(R.drawable.im_user_mock),
+                        contentDescription = null,
+                        modifier = Modifier.clip(CircleShape).size(50.dp)
+                    )
+                    Column {
+                        Text(
+                            text = "Marcones The Killer",
+                            style = MaterialTheme.typography.titleSmall,
+                            fontFamily = urbanistFamily,
+                            fontWeight = FontWeight.SemiBold,
+                            color = MaterialTheme.colorScheme.primary,
+                            fontSize = 16.sp,
+                            modifier = Modifier.padding(horizontal = 12.dp)
+                        )
+                        Text(
+                            text = "marconeslgbt@gmail.com",
+                            style = MaterialTheme.typography.titleSmall,
+                            fontFamily = urbanistFamily,
+                            fontWeight = FontWeight.Light,
+                            color = MaterialTheme.colorScheme.primary,
+                            fontSize = 14.sp,
+                            modifier = Modifier.padding(horizontal = 12.dp)
+                        )
+                    }
+                }
+                HorizontalDivider()
+            }
+
             ItemMenu(icon = R.drawable.payment_svgrepo_com, item ="Método de pagamento")
             ItemMenu(icon = R.drawable.ic_beard, item ="Minhas Barbearias", onClick = {
                 onNavigate(Routes.MyBarberScreen)

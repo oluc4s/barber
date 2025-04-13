@@ -37,6 +37,7 @@ import com.s2start.home.presentation.ui.barbershops.mylist.MyBarberState
 import com.s2start.home.presentation.ui.barbershops.mylist.MyBarberViewModel
 import com.s2start.home.presentation.ui.components.BottomBar
 import com.s2start.home.presentation.ui.components.CardResumeBarber
+import com.s2start.home.presentation.ui.components.DropdownItem
 import com.s2start.home.presentation.ui.components.TopBar
 import org.koin.androidx.compose.koinViewModel
 
@@ -52,7 +53,6 @@ fun BarberShopsScreenRoot(
     )
 }
 
-
 @Composable
 fun BarberShopsScreen(
     state: BarberShopsState,
@@ -62,9 +62,12 @@ fun BarberShopsScreen(
     Screen (
         topBar = { TopBar(
             "Barbearias",
-            onClickDot = {
-                onNavigate.invoke(Routes.BarberShopsCreateScreen)
-            }
+            menuItems = listOf(DropdownItem(
+                label = "Nova Barbearia",
+                onClick = {
+                    onNavigate.invoke(Routes.BarberShopsCreateScreen)
+                }
+            ))
         ) },
         bottomBar = { BottomBar(onNavigate,selectableRoute = Routes.BarberShopsScreen) },
         containerColor = MaterialTheme.colorScheme.background
