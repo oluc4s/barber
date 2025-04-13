@@ -33,6 +33,8 @@ import com.s2start.designsystem.components.screen.Screen
 import com.s2start.designsystem.urbanistFamily
 import com.s2start.designsystem.yellow
 import com.s2start.domain.Routes
+import com.s2start.home.presentation.ui.barbershops.mylist.MyBarberState
+import com.s2start.home.presentation.ui.barbershops.mylist.MyBarberViewModel
 import com.s2start.home.presentation.ui.components.BottomBar
 import com.s2start.home.presentation.ui.components.CardResumeBarber
 import com.s2start.home.presentation.ui.components.TopBar

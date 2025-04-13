@@ -1,4 +1,4 @@
-package com.s2start.home.presentation.ui.barbershops.list
+package com.s2start.home.presentation.ui.barbershops.mylist
 
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -8,16 +8,15 @@ import androidx.lifecycle.viewModelScope
 import com.s2start.domain.SessionStorage
 import com.s2start.domain.util.ModelResult.Companion.onSuccess
 import com.s2start.home.domain.usecase.GetListBarberUseCase
+import com.s2start.home.domain.usecase.GetMyListBarberUseCase
 import com.s2start.home.presentation.model.toUiListModel
-import com.s2start.home.presentation.ui.barbershops.mylist.MyBarberAction
-import com.s2start.home.presentation.ui.barbershops.mylist.MyBarberState
 import kotlinx.coroutines.launch
 
-class BarberShopsViewModel(
+class MyBarberViewModel(
     private val sessionStorage: SessionStorage,
-    private val getListBarberUseCase: GetListBarberUseCase
+    private val getMyListBarberUseCase: GetMyListBarberUseCase
 ): ViewModel() {
-    var state by mutableStateOf(BarberShopsState())
+    var state by mutableStateOf(MyBarberState())
         private set
 
 
@@ -32,7 +31,7 @@ class BarberShopsViewModel(
 
     private fun fetchBarberCoordinates(){
         viewModelScope.launch {
-            getListBarberUseCase.invoke().onSuccess {
+            getMyListBarberUseCase.invoke().onSuccess {
                 state = state.copy(barberResumeUi = it.toUiListModel().toMutableList())
             }
         }

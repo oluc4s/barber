@@ -3,6 +3,7 @@ package com.s2start.home.domain.model
 import java.io.Serializable
 
 data class BarberModel(
+    val userId:String = "",
     val name:String,
     val address:String,
     val image:Int,
@@ -13,5 +14,5 @@ data class BarberModel(
     val longitude:Double = 0.0
 ): Serializable{
     @Suppress("unused")
-    constructor() : this("", "", 0, "", 0.0, 0.0, 0.0, 0.0)
+    constructor() : this("","", "", 0, "", 0.0, 0.0, 0.0, 0.0)
 }

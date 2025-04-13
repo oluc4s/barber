@@ -9,6 +9,8 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
@@ -21,8 +23,11 @@ import com.s2start.designsystem.urbanistFamily
 fun TopBar(
     title:String,
     onClickDot:(() -> Unit)? = null,
-    onBackButton:(() -> Unit)? = null
-){
+    onBackButton:(() -> Unit)? = null,
+    onSearch:((Boolean) -> Unit)? = null,
+
+    ){
+    val searchSave = remember { mutableStateOf(false) }
     TopAppBar(
         title = {
             Text(
@@ -34,15 +39,18 @@ fun TopBar(
             )
         },
         actions = {
-            IconButton(onClick = {
-
-            }) {
-                Icon(
-                    painter = painterResource(id = R.drawable.ic_search),
-                    null,
-                    tint = MaterialTheme.colorScheme.primary,
-                    modifier = Modifier.size(20.dp)
-                )
+            onSearch?.let {
+                IconButton(onClick = {
+                    searchSave.value = !searchSave.value
+                    onSearch.invoke(searchSave.value)
+                }) {
+                    Icon(
+                        painter = painterResource(id = R.drawable.ic_search),
+                        null,
+                        tint = MaterialTheme.colorScheme.primary,
+                        modifier = Modifier.size(20.dp)
+                    )
+                }
             }
             onClickDot?.let {
                 IconButton(onClick = {

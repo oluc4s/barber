@@ -5,6 +5,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -46,7 +47,12 @@ fun ProfileScreen(
         containerColor = MaterialTheme.colorScheme.background
     ) {
         Column(modifier = Modifier.padding(horizontal = 12.dp)){
+            ItemMenu(icon = R.drawable.payment_svgrepo_com, item ="Método de pagamento")
+            ItemMenu(icon = R.drawable.ic_beard, item ="Minhas Barbearias", onClick = {
+                onNavigate(Routes.MyBarberScreen)
+            })
             ItemMenu(icon = R.drawable.ic_graduation_hat_alt, item ="Curso de barbearia")
+            HorizontalDivider()
             ItemMenu(icon = R.drawable.ic_shield, item ="Termos de uso")
             ItemMenu(icon = R.drawable.ic_logout, item ="Sair", onClick = {
                 onLogoutClick()
@@ -81,6 +87,7 @@ fun ItemMenu(icon:Int,item:String,onClick: () -> Unit = {}){
             fontSize = 16.sp,
             modifier = Modifier.padding(horizontal = 12.dp)
         )
+        Spacer(modifier = Modifier.weight(1f))
         Icon(
             painter = painterResource(id = R.drawable.ic_arrow_next),
             null,

@@ -11,8 +11,10 @@ class BarberRepositoryImpl(
     override suspend fun createBarber(account: BarberModel): ModelResult<String> {
         return  barberFirebase.createBarber(account)
     }
-
     override suspend fun getListBarber(): ModelResult<List<BarberModel>> {
         return  barberFirebase.getListBarber()
+    }
+    override suspend fun getMyListBarber(): ModelResult<List<BarberModel>> {
+        return  barberFirebase.getMyListBarber()
     }
 }

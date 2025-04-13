@@ -14,4 +14,5 @@ val homeDataModule = module {
     singleOf(::BarberRepositoryImpl).bind<BarberRepository>()
     singleOf(::CreateBarberUseCase)
     singleOf(::GetListBarberUseCase)
+    singleOf(::GetMyListBarberUseCase)
 }
