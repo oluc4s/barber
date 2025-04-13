@@ -30,37 +30,48 @@ import com.s2start.designsystem.urbanistFamily
 import com.s2start.domain.Routes
 import com.s2start.home.presentation.ui.components.BottomBar
 import com.s2start.home.presentation.ui.components.TopBar
+import com.s2start.home.presentation.ui.home.HomeState
+import com.s2start.home.presentation.ui.home.HomeViewModel
+import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun ProfileScreenRoot(
+    viewModel: ProfileViewModel = koinViewModel(),
     onNavigate: (Routes) -> Unit = {},
     onLogoutClick: () -> Unit
 ) {
-    ProfileScreen(onNavigate = onNavigate,onLogoutClick = onLogoutClick)
+    ProfileScreen(
+        state = viewModel.state,
+        onNavigate = onNavigate,
+        onLogoutClick = onLogoutClick
+    )
 }
 
 
 @Composable
 fun ProfileScreen(
+    state: ProfileState,
     onNavigate: (Routes) -> Unit = {},
     onLogoutClick: () -> Unit = {}
-    ) {
+) {
     Screen(
         topBar = { TopBar("Configuracao") },
-        bottomBar = { BottomBar(onNavigate = onNavigate,selectableRoute = Routes.ProfileScreen) },
+        bottomBar = { BottomBar(onNavigate = onNavigate, selectableRoute = Routes.ProfileScreen) },
         containerColor = MaterialTheme.colorScheme.background
     ) {
-        Column(modifier = Modifier.padding(horizontal = 12.dp)){
+        Column(modifier = Modifier.padding(horizontal = 12.dp)) {
             Column {
                 Row(modifier = Modifier.padding(vertical = 12.dp)) {
                     Image(
                         painter = painterResource(R.drawable.im_user_mock),
                         contentDescription = null,
-                        modifier = Modifier.clip(CircleShape).size(50.dp)
+                        modifier = Modifier
+                            .clip(CircleShape)
+                            .size(50.dp)
                     )
                     Column {
                         Text(
-                            text = "Marcones The Killer",
+                            text = state.authInfo?.displayName.orEmpty(),
                             style = MaterialTheme.typography.titleSmall,
                             fontFamily = urbanistFamily,
                             fontWeight = FontWeight.SemiBold,
@@ -69,7 +80,7 @@ fun ProfileScreen(
                             modifier = Modifier.padding(horizontal = 12.dp)
                         )
                         Text(
-                            text = "marconeslgbt@gmail.com",
+                            text = state.authInfo?.email.orEmpty(),
                             style = MaterialTheme.typography.titleSmall,
                             fontFamily = urbanistFamily,
                             fontWeight = FontWeight.Light,
@@ -81,15 +92,20 @@ fun ProfileScreen(
                 }
                 HorizontalDivider()
             }
-
-            ItemMenu(icon = R.drawable.payment_svgrepo_com, item ="Método de pagamento")
-            ItemMenu(icon = R.drawable.ic_beard, item ="Minhas Barbearias", onClick = {
-                onNavigate(Routes.MyBarberScreen)
-            })
-            ItemMenu(icon = R.drawable.ic_graduation_hat_alt, item ="Curso de barbearia")
+            ItemMenu(icon = R.drawable.user_pen_edit, item = "Atualização Cadastral")
+            ItemMenu(icon = R.drawable.payment_svgrepo_com, item = "Método de pagamento")
+            ItemMenu(
+                icon = R.drawable.ic_beard,
+                hide = !state.isHasBarber,
+                item = "Minhas Barbearias",
+                onClick = {
+                    onNavigate(Routes.MyBarberScreen)
+                })
+            ItemMenu(icon = R.drawable.ic_graduation_hat_alt, item = "Curso de barbearia")
             HorizontalDivider()
-            ItemMenu(icon = R.drawable.ic_shield, item ="Termos de uso")
-            ItemMenu(icon = R.drawable.ic_logout, item ="Sair", onClick = {
+            ItemMenu(icon = R.drawable.ic_shield, item = "Politica de Privacidade")
+            ItemMenu(icon = R.drawable.ic_document_add, item = "Termos de uso")
+            ItemMenu(icon = R.drawable.ic_logout, item = "Sair", onClick = {
                 onLogoutClick()
             })
         }
@@ -97,48 +113,48 @@ fun ProfileScreen(
 }
 
 @Composable
-fun ItemMenu(icon:Int,item:String,onClick: () -> Unit = {}){
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(12.dp)
-            .clickable {
-                onClick()
-        },
-        verticalAlignment = Alignment.CenterVertically
-    ){
-        Icon(
-            painter = painterResource(id = icon),
-            null,
-            tint = MaterialTheme.colorScheme.primary,
-            modifier = Modifier.size(20.dp)
-        )
-        Text(
-            text = item,
-            style = MaterialTheme.typography.titleSmall,
-            fontFamily = urbanistFamily,
-            fontWeight = FontWeight.Normal,
-            color = MaterialTheme.colorScheme.primary,
-            fontSize = 16.sp,
-            modifier = Modifier.padding(horizontal = 12.dp)
-        )
-        Spacer(modifier = Modifier.weight(1f))
-        Icon(
-            painter = painterResource(id = R.drawable.ic_arrow_next),
-            null,
-            tint = MaterialTheme.colorScheme.primary,
-            modifier = Modifier.size(20.dp)
-        )
+fun ItemMenu(icon: Int, item: String, hide: Boolean = false, onClick: () -> Unit = {}) {
+    if (!hide) {
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(12.dp)
+                .clickable {
+                    onClick()
+                },
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Icon(
+                painter = painterResource(id = icon),
+                null,
+                tint = MaterialTheme.colorScheme.primary,
+                modifier = Modifier.size(20.dp)
+            )
+            Text(
+                text = item,
+                style = MaterialTheme.typography.titleSmall,
+                fontFamily = urbanistFamily,
+                fontWeight = FontWeight.Normal,
+                color = MaterialTheme.colorScheme.primary,
+                fontSize = 16.sp,
+                modifier = Modifier.padding(horizontal = 12.dp)
+            )
+            Spacer(modifier = Modifier.weight(1f))
+            Icon(
+                painter = painterResource(id = R.drawable.ic_arrow_next),
+                null,
+                tint = MaterialTheme.colorScheme.primary,
+                modifier = Modifier.size(20.dp)
+            )
+        }
     }
 }
-
-
 
 
 @PreviewLightDark
 @Composable
 private fun ProfileScreenPreview() {
     AlpacaTheme {
-        ProfileScreen()
+        ProfileScreen(state = ProfileState())
     }
 }
