@@ -135,12 +135,6 @@ private fun NavGraphBuilder.homeGraph(navController: NavHostController) {
                 }
             )
         }
-        composable<HomeRoutes.BarberShopsCreateScreen> {
-            BarberShopCreateScreenRoot(
-                onNavigate = { navController.navigate(it) },
-                onBack = { navController.popBackStack() }
-            )
-        }
         composable<HomeRoutes.ChatScreen> {
             ChatScreenRoot(onNavigate = { navController.navigate(it) })
         }
@@ -150,6 +144,17 @@ private fun NavGraphBuilder.homeGraph(navController: NavHostController) {
         composable<HomeRoutes.BarberShopsScreen> {
             BarberShopsScreenRoot(onNavigate = { navController.navigate(it) })
         }
+
+        composable<HomeRoutes.BarberShopsCreateScreen>(
+            enterTransition = { slideIntoContainer(SlideDirection.Start, animationSpec = tween(500)) },
+            exitTransition = { slideOutOfContainer(SlideDirection.Right, animationSpec = tween(500)) }
+        ){
+            BarberShopCreateScreenRoot(
+                onNavigate = { navController.navigate(it) },
+                onBack = { navController.popBackStack() }
+            )
+        }
+
         composable<HomeRoutes.MyBarberScreen>(
             enterTransition = { slideIntoContainer(SlideDirection.Start, animationSpec = tween(500)) },
             exitTransition = { slideOutOfContainer(SlideDirection.Right, animationSpec = tween(500)) }
