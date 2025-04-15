@@ -6,7 +6,9 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Text
+import androidx.compose.material.TextButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.IconButtonDefaults
@@ -28,17 +30,17 @@ import com.s2start.designsystem.yellow
 import com.s2start.designsystem.yellowSecondary
 
 @Composable
-fun QuickActionButton(icon:Int,name:String){
+fun QuickActionButton(
+    icon:Int,
+    name:String,
+    shape:ClipShape = ClipShape.CIRCLE
+){
     Column (horizontalAlignment = Alignment.CenterHorizontally){
-        IconButton(
-            onClick = { /* TODO */ },
-            modifier = Modifier.size(60.dp),
-            colors = IconButtonDefaults.iconButtonColors(contentColor = Color.White)
-        ) {
+        TextButton({}) {
             Column (
                 modifier = Modifier
                     .size(60.dp)
-                    .clip(CircleShape)
+                    .checkClipShape(shape)
                     .background(yellowSecondary),
                 horizontalAlignment = Alignment.CenterHorizontally,
                 verticalArrangement = Arrangement.Center
@@ -61,11 +63,21 @@ fun QuickActionButton(icon:Int,name:String){
         )
     }
 }
+fun Modifier.checkClipShape(shape: ClipShape):Modifier{
+    return when(shape){
+        ClipShape.CIRCLE -> clip(CircleShape)
+        ClipShape.RECTANGLE_BOUNDS -> clip(RoundedCornerShape(12.dp))
+    }
+}
+enum class ClipShape{
+    CIRCLE,RECTANGLE_BOUNDS
+}
 
 @PreviewLightDark
 @Composable
 fun QuickActionButtonPreview(){
     AlpacaTheme {
         QuickActionButton(R.drawable.ic_cut,"Corte")
+        QuickActionButton(R.drawable.ic_cut,"Corte", shape = ClipShape.RECTANGLE_BOUNDS)
     }
 }

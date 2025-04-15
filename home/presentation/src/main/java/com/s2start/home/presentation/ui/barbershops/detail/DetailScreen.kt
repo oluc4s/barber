@@ -16,6 +16,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
@@ -36,7 +37,8 @@ import com.s2start.designsystem.AlpacaTheme
 import com.s2start.designsystem.backgroundColorDark
 import com.s2start.designsystem.urbanistFamily
 import com.s2start.designsystem.yellow
-import com.s2start.home.presentation.ui.home.QuickActions
+import com.s2start.home.presentation.ui.components.ClipShape
+import com.s2start.home.presentation.ui.components.QuickActionButton
 
 @Composable
 fun DetailScreenRoot(
@@ -152,7 +154,7 @@ fun DetailScreen(
                                 modifier = Modifier.padding(end = 3.dp)
                             )
                             Text(
-                                text = "123 km",
+                                text = "123 Main Street, Anytown, USA",
                                 color = MaterialTheme.colorScheme.secondary,
                                 style = MaterialTheme.typography.bodySmall,
                             )
@@ -165,14 +167,19 @@ fun DetailScreen(
                                 modifier = Modifier.padding(end = 3.dp)
                             )
                             Text(
-                                text = "4.8",
+                                text = "4.8 ",
                                 color = yellow,
+                                style = MaterialTheme.typography.bodySmall,
+                            )
+                            Text(
+                                text = "(3,279 reviews)",
+                                color = MaterialTheme.colorScheme.secondary,
                                 style = MaterialTheme.typography.bodySmall,
                             )
                         }
                     }
 
-                    QuickActions()
+                    QuickActionsDetails(modifier = Modifier.padding(vertical = 16.dp))
 
                     Spacer(modifier = Modifier.height(500.dp))
                 }
@@ -181,6 +188,23 @@ fun DetailScreen(
     }
 }
 
+
+@Composable
+private fun QuickActionsDetails(modifier: Modifier = Modifier){
+    Column (modifier = modifier){
+        Row (
+            modifier = Modifier
+                .fillMaxWidth().padding(bottom = 6.dp),
+            horizontalArrangement = Arrangement.SpaceBetween
+        ){
+            QuickActionButton(R.drawable.ic_message,"Menssagem",ClipShape.RECTANGLE_BOUNDS)
+            QuickActionButton(R.drawable.ic_phone_call,"Ligar",ClipShape.RECTANGLE_BOUNDS)
+            QuickActionButton(R.drawable.map_pin,"Mapa",ClipShape.RECTANGLE_BOUNDS)
+            QuickActionButton(R.drawable.ic_shared,"Compartilhar",ClipShape.RECTANGLE_BOUNDS)
+        }
+        HorizontalDivider()
+    }
+}
 
 
 
