@@ -14,7 +14,6 @@ import androidx.compose.material.Text
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
@@ -26,7 +25,7 @@ import com.s2start.core.presentation.designsystem.R
 import com.s2start.designsystem.AlpacaTheme
 import com.s2start.designsystem.components.screen.Screen
 import com.s2start.designsystem.urbanistFamily
-import com.s2start.domain.Routes
+import com.s2start.home.presentation.route.HomeRoutes
 import com.s2start.home.presentation.ui.components.BottomBar
 import com.s2start.home.presentation.ui.components.TopBar
 import org.koin.androidx.compose.koinViewModel
@@ -35,7 +34,7 @@ import org.koin.androidx.compose.koinViewModel
 @Composable
 fun ChatScreenRoot(
     viewModel: ChatViewModel = koinViewModel(),
-    onNavigate: (Routes) -> Unit = {}
+    onNavigate: (HomeRoutes) -> Unit = {}
 ) {
     ChatScreen(
         viewModel.state,
@@ -47,12 +46,12 @@ fun ChatScreenRoot(
 @Composable
 fun ChatScreen(
     state: ChatState,
-    onNavigate: (Routes) -> Unit = {}
+    onNavigate: (HomeRoutes) -> Unit = {}
 ) {
     val item = ChatData("Marcones","Vou ir terca feira as 19:00",R.drawable.im_user_mock,"19:00")
     Screen (
         topBar = { TopBar("Chat") },
-        bottomBar = { BottomBar(onNavigate,selectableRoute = Routes.ChatScreen) },
+        bottomBar = { BottomBar(onNavigate,selectableRoute = HomeRoutes.ChatScreen) },
         containerColor = MaterialTheme.colorScheme.background
     ) {
         LazyColumn(modifier = Modifier.fillMaxSize()) {

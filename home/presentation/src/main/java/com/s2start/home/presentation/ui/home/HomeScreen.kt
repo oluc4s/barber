@@ -19,11 +19,9 @@ import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
-import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
@@ -35,8 +33,8 @@ import androidx.compose.ui.unit.sp
 import com.s2start.designsystem.AlpacaTheme
 import com.s2start.designsystem.backgroundColorDark
 import com.s2start.designsystem.urbanistFamily
-import com.s2start.domain.Routes
 import com.s2start.home.presentation.model.mockBarber
+import com.s2start.home.presentation.route.HomeRoutes
 import com.s2start.home.presentation.ui.components.BottomBar
 import com.s2start.home.presentation.ui.components.CardBarber
 import com.s2start.home.presentation.ui.components.CardResumeBarber
@@ -47,7 +45,7 @@ import kotlinx.coroutines.Job
 @Composable
 fun HomeScreenRoot(
     viewModel: HomeViewModel = koinViewModel(),
-    onNavigate: (Routes) -> Unit = {}
+    onNavigate: (HomeRoutes) -> Unit = {}
 ) {
     HomeScreen(
         viewModel.state,
@@ -59,7 +57,7 @@ fun HomeScreenRoot(
 @Composable
 fun HomeScreen(
     state: HomeState,
-    onNavigate: (Routes) -> Unit = {}
+    onNavigate: (HomeRoutes) -> Unit = {}
 ) {
     val listState = rememberLazyListState()
     var scrollDirection by remember { mutableStateOf("") }
@@ -97,7 +95,7 @@ fun HomeScreen(
         topBar = {
             if(showMenuTop){ TopBar(state = state){ search.value = it} }
                  },
-        bottomBar = { BottomBar(onNavigate,Routes.HomeScreen) },
+        bottomBar = { BottomBar(onNavigate,HomeRoutes.HomeScreen) },
         containerColor = MaterialTheme.colorScheme.background
     ) {
         LazyColumn(
@@ -106,18 +104,18 @@ fun HomeScreen(
             ) {
             if(!isSearching){
                 item { QuickActions() }
-                item { SectionTitle("Meus Agendamentos"){ onNavigate(Routes.CutScreen) } }
+                item { SectionTitle("Meus Agendamentos"){ onNavigate(HomeRoutes.CutScreen) } }
                 item { CardBarber(mockBarber) }
-                item { SectionTitle("Barbearias Recomendadas"){ onNavigate(Routes.BarberShopsScreen) } }
+                item { SectionTitle("Barbearias Recomendadas"){ onNavigate(HomeRoutes.BarberShopsScreen) } }
             }else{
-                item { SectionTitle("Barbearias"){ onNavigate(Routes.BarberShopsScreen) } }
+                item { SectionTitle("Barbearias"){ onNavigate(HomeRoutes.BarberShopsScreen) } }
             }
 
             items(listBarber){
                 CardResumeBarber(
                     it,
                     onClickCard = {
-                        onNavigate(Routes.BarberDetailScreen)
+                        onNavigate(HomeRoutes.BarberDetailScreen(it.barberId))
                     }
                 )
             }

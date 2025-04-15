@@ -17,14 +17,14 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.s2start.core.presentation.designsystem.R
 import com.s2start.designsystem.yellow
-import com.s2start.domain.Routes
+import com.s2start.home.presentation.route.HomeRoutes
 
 
 @Preview
 @Composable
 fun BottomBar(
-    onNavigate: (Routes) -> Unit = {},
-    selectableRoute: Routes = Routes.CutScreen
+    onNavigate: (HomeRoutes) -> Unit = {},
+    selectableRoute: HomeRoutes = HomeRoutes.CutScreen
 ){
     BottomNavigation(
         modifier = Modifier.navigationBarsPadding(),
@@ -62,13 +62,13 @@ private data class ItemMenu(
     val icon:Int,
     val title:String? = null,
     val isRounded:Boolean = false,
-    val routes:Routes
+    val routes:HomeRoutes
 )
 
 private var menuItems = listOf(
-    ItemMenu(R.drawable.ic_home, "Biblia", routes = Routes.HomeScreen),
-    ItemMenu(R.drawable.ic_map, "Mapas", routes = Routes.BarberShopsScreen),
-    ItemMenu(R.drawable.ic_menu_cut,"Corte", routes = Routes.CutScreen),
-    ItemMenu(R.drawable.ic_message, "Mensagem", routes = Routes.ChatScreen),
-    ItemMenu(R.drawable.ic_user, "User", routes = Routes.ProfileScreen)
+    ItemMenu(R.drawable.ic_home, "Biblia", routes = HomeRoutes.HomeScreen),
+    ItemMenu(R.drawable.ic_map, "Mapas", routes = HomeRoutes.BarberShopsScreen),
+    ItemMenu(R.drawable.ic_menu_cut,"Corte", routes = HomeRoutes.CutScreen),
+    ItemMenu(R.drawable.ic_message, "Mensagem", routes = HomeRoutes.ChatScreen),
+    ItemMenu(R.drawable.ic_user, "User", routes = HomeRoutes.ProfileScreen)
 )

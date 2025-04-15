@@ -3,7 +3,6 @@ package com.s2start.home.presentation.ui.profile
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -17,8 +16,6 @@ import androidx.compose.material3.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.PreviewLightDark
@@ -27,17 +24,15 @@ import androidx.compose.ui.unit.sp
 import com.s2start.core.presentation.designsystem.R
 import com.s2start.designsystem.AlpacaTheme
 import com.s2start.designsystem.urbanistFamily
-import com.s2start.domain.Routes
+import com.s2start.home.presentation.route.HomeRoutes
 import com.s2start.home.presentation.ui.components.BottomBar
 import com.s2start.home.presentation.ui.components.TopBar
-import com.s2start.home.presentation.ui.home.HomeState
-import com.s2start.home.presentation.ui.home.HomeViewModel
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun ProfileScreenRoot(
     viewModel: ProfileViewModel = koinViewModel(),
-    onNavigate: (Routes) -> Unit = {},
+    onNavigate: (HomeRoutes) -> Unit = {},
     onLogoutClick: () -> Unit
 ) {
     ProfileScreen(
@@ -51,12 +46,12 @@ fun ProfileScreenRoot(
 @Composable
 fun ProfileScreen(
     state: ProfileState,
-    onNavigate: (Routes) -> Unit = {},
+    onNavigate: (HomeRoutes) -> Unit = {},
     onLogoutClick: () -> Unit = {}
 ) {
     Screen(
         topBar = { TopBar("Configuracao") },
-        bottomBar = { BottomBar(onNavigate = onNavigate, selectableRoute = Routes.ProfileScreen) },
+        bottomBar = { BottomBar(onNavigate = onNavigate, selectableRoute = HomeRoutes.ProfileScreen) },
         containerColor = MaterialTheme.colorScheme.background
     ) {
         Column(modifier = Modifier.padding(horizontal = 12.dp)) {
@@ -99,7 +94,7 @@ fun ProfileScreen(
                 hide = !state.isHasBarber,
                 item = "Minhas Barbearias",
                 onClick = {
-                    onNavigate(Routes.MyBarberScreen)
+                    onNavigate(HomeRoutes.MyBarberScreen)
                 })
             ItemMenu(icon = R.drawable.ic_graduation_hat_alt, item = "Curso de barbearia")
             HorizontalDivider()

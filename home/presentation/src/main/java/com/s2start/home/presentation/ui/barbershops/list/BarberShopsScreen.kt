@@ -32,9 +32,7 @@ import com.s2start.designsystem.AlpacaTheme
 import com.s2start.designsystem.components.screen.Screen
 import com.s2start.designsystem.urbanistFamily
 import com.s2start.designsystem.yellow
-import com.s2start.domain.Routes
-import com.s2start.home.presentation.ui.barbershops.mylist.MyBarberState
-import com.s2start.home.presentation.ui.barbershops.mylist.MyBarberViewModel
+import com.s2start.home.presentation.route.HomeRoutes
 import com.s2start.home.presentation.ui.components.BottomBar
 import com.s2start.home.presentation.ui.components.CardResumeBarber
 import com.s2start.home.presentation.ui.components.DropdownItem
@@ -45,7 +43,7 @@ import org.koin.androidx.compose.koinViewModel
 @Composable
 fun BarberShopsScreenRoot(
     viewModel: BarberShopsViewModel = koinViewModel(),
-    onNavigate: (Routes) -> Unit = {}
+    onNavigate: (HomeRoutes) -> Unit = {}
 ) {
     BarberShopsScreen(
         viewModel.state,
@@ -56,7 +54,7 @@ fun BarberShopsScreenRoot(
 @Composable
 fun BarberShopsScreen(
     state: BarberShopsState,
-    onNavigate: (Routes) -> Unit = {}
+    onNavigate: (HomeRoutes) -> Unit = {}
 ) {
     val context = LocalContext.current
     Screen (
@@ -65,11 +63,11 @@ fun BarberShopsScreen(
             menuItems = listOf(DropdownItem(
                 label = "Nova Barbearia",
                 onClick = {
-                    onNavigate.invoke(Routes.BarberShopsCreateScreen)
+                    onNavigate.invoke(HomeRoutes.BarberShopsCreateScreen)
                 }
             ))
         ) },
-        bottomBar = { BottomBar(onNavigate,selectableRoute = Routes.BarberShopsScreen) },
+        bottomBar = { BottomBar(onNavigate,selectableRoute = HomeRoutes.BarberShopsScreen) },
         containerColor = MaterialTheme.colorScheme.background
     ) {
         val listBarber = state.barberResumeUi.sortedBy { it.distance }

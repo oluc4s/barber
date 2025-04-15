@@ -1,12 +1,14 @@
 package com.s2start.home.presentation.model
 
-import com.s2start.core.presentation.designsystem.R
 import com.s2start.home.domain.model.BarberModel
+import kotlinx.serialization.Serializable
 
+@Serializable
 data class BarberResumeUi(
+    val barberId:String = "",
     val name:String,
     val address:String,
-    val image:Int = R.drawable.img_moc_barber,
+    val image: String,
     val services:String,
     val rating:Double = 0.0,
     val distance:Double = 0.0,
@@ -21,7 +23,8 @@ fun BarberModel.toUiModel() = BarberResumeUi(
     latitude = latitude,
     longitude = longitude,
     services = services,
-    rating = rating
+    rating = rating,
+    image = "",
 )
 fun List<BarberModel>.toUiListModel() = this.map {
     BarberResumeUi(
@@ -31,8 +34,8 @@ fun List<BarberModel>.toUiListModel() = this.map {
         latitude = it.latitude,
         longitude = it.longitude,
         services = it.services,
-        rating = it.rating
-    )
+        rating = it.rating,
+        image = "")
 }
 
 
@@ -40,7 +43,7 @@ val mockBarberResumeList = arrayOf(
     BarberResumeUi(
         name = "Barbearia Trindade",
         address = "Rua Marechal Falconieri, 538, Europa",
-        image = R.drawable.img_moc_barber,
+        image = "",
         services = "Corte de cabelo com degradê, barbear tradicional, lavagem e hidratação",
         rating = 5.2,
         distance = 2.5
@@ -48,7 +51,7 @@ val mockBarberResumeList = arrayOf(
     BarberResumeUi(
         name = "Elite Barber Shop",
         address = "Av. Brasil, 1020, Centro",
-        image = R.drawable.img_mock_barber2,
+        image = "",
         services = "Corte executivo, barba alinhada, pigmentação capilar",
         rating = 4.8,
         distance = 3.2
@@ -56,7 +59,7 @@ val mockBarberResumeList = arrayOf(
     BarberResumeUi(
         name = "Estilo & Fios",
         address = "Rua das Palmeiras, 77, São Pedro",
-        image = R.drawable.img_mock_barber3,
+        image = "",
         services = "Corte clássico, barba modelada, relaxamento capilar",
         rating = 4.5,
         distance = 1.8
@@ -64,7 +67,7 @@ val mockBarberResumeList = arrayOf(
     BarberResumeUi(
         name = "King's Barber",
         address = "Praça Central, 305, Vila Nova",
-        image = R.drawable.img_mock_barber4,
+        image = "",
         services = "Corte undercut, barbear completo, sobrancelha",
         rating = 4.9,
         distance = 5.0
@@ -72,7 +75,7 @@ val mockBarberResumeList = arrayOf(
     BarberResumeUi(
         name = "Luxo & Navalha",
         address = "Rua dos Andradas, 54, Jardim das Flores",
-        image = R.drawable.img_mock_barber5,
+        image = "",
         services = "Corte moderno, barba com navalha quente, massagem facial",
         rating = 4.7,
         distance = 2.9
@@ -80,7 +83,7 @@ val mockBarberResumeList = arrayOf(
     BarberResumeUi(
         name = "Barbearia Imperial",
         address = "Alameda dos Pinheiros, 12, Bela Vista",
-        image = R.drawable.img_mock_barber6,
+        image = "",
         services = "Corte degradê americano, tratamento capilar, barbear à vapor",
         rating = 5.0,
         distance = 4.3
@@ -88,7 +91,7 @@ val mockBarberResumeList = arrayOf(
     BarberResumeUi(
         name = "Old School Barber",
         address = "Rua XV de Novembro, 890, Centro Histórico",
-        image = R.drawable.img_mock_barber7,
+        image = "",
         services = "Corte vintage, barba clássica, finalização com pomada",
         rating = 4.6,
         distance = 3.7
@@ -96,7 +99,7 @@ val mockBarberResumeList = arrayOf(
     BarberResumeUi(
         name = "Barber Premium",
         address = "Avenida Atlântica, 210, Copacabana",
-        image = R.drawable.img_mock_barber8,
+        image = "",
         services = "Corte moderno, alisamento, tratamento capilar intensivo",
         rating = 4.9,
         distance = 6.0
@@ -104,7 +107,7 @@ val mockBarberResumeList = arrayOf(
     BarberResumeUi(
         name = "Navalha de Ouro",
         address = "Rua das Flores, 32, Nova Esperança",
-        image = R.drawable.img_mock_barber9,
+        image = "",
         services = "Corte militar, barbear detalhado, hidratação de barba",
         rating = 4.8,
         distance = 2.2
@@ -112,7 +115,7 @@ val mockBarberResumeList = arrayOf(
     BarberResumeUi(
         name = "Estética Masculina",
         address = "Avenida São João, 450, São Bento",
-        image = R.drawable.img_mock_barber10,
+        image = "",
         services = "Corte personalizado, alinhamento de barba, spa facial",
         rating = 5.0,
         distance = 1.5
@@ -123,7 +126,7 @@ val mockBarberResumeList = arrayOf(
 val mockBarberResume = BarberResumeUi(
     name = "Barbearia Trindade",
     address = "Rua Marechal Falconieri, 538, Europa",
-    image = R.drawable.img_moc_barber,
+    image = "",
     services = "Corte de cabelo com corte inferior, barbear regular, lavagem natural do cabelo",
     rating = 5.2,
     distance = 2.5

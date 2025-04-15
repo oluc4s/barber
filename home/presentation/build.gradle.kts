@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.sample.android.feature.ui)
     alias(libs.plugins.mapsplatform.secrets.plugin)
+    alias(libs.plugins.sample.jvm.ktor)
 }
 
 android {

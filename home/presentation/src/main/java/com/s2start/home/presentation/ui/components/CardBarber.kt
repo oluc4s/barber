@@ -72,7 +72,7 @@ fun CardResumeBarber(barber: BarberResumeUi,onClickCard: () -> Unit = {}){
                 verticalAlignment = Alignment.CenterVertically,
             ) {
                 Image(
-                    painter = painterResource(barber.image),
+                    painter = painterResource(R.drawable.img_moc_barber),
                     contentDescription = "Barbearia",
                     modifier = Modifier
                         .size(50.dp)
