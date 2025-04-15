@@ -164,7 +164,9 @@ private fun NavGraphBuilder.homeGraph(navController: NavHostController) {
             exitTransition = { slideOutOfContainer(SlideDirection.Right, animationSpec = tween(500)) }
         ) {
             val args = it.toRoute<HomeRoutes.BarberDetailScreen>()
-            DetailScreenRoot()
+            DetailScreenRoot(
+                onBack = { navController.popBackStack() }
+            )
         }
     }
 }

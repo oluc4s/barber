@@ -12,20 +12,26 @@ import com.s2start.designsystem.components.screen.Screen
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Button
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.runtime.derivedStateOf
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.zIndex
 import com.s2start.designsystem.AlpacaTheme
 import com.s2start.designsystem.backgroundColorDark
 import com.s2start.designsystem.urbanistFamily
@@ -33,13 +39,21 @@ import com.s2start.designsystem.yellow
 import com.s2start.home.presentation.ui.home.QuickActions
 
 @Composable
-fun DetailScreenRoot() {
-    DetailScreen()
+fun DetailScreenRoot(
+    onBack: () -> Unit = {}
+) {
+    DetailScreen(onBack = onBack)
 }
 
 @Composable
-fun DetailScreen() {
-    Screen (
+fun DetailScreen(
+    onBack: () -> Unit = {}
+) {
+    val scrollState = rememberScrollState()
+    val imageAlpha by remember { derivedStateOf { 1f - (scrollState.value / 1000f).coerceIn(0f, 1f) } }
+    val imageHeight = 400.dp
+
+    Screen(
         bottomBar = {
             ButtonAlpaca(
                 text = "Agendar",
@@ -50,50 +64,52 @@ fun DetailScreen() {
             )
         },
         clearTopPadding = true
-    ){
-        Box{
+    ) {
+
+        Box(modifier = Modifier.fillMaxSize()) {
+
             Image(
                 painter = painterResource(R.drawable.im_details_image_demo),
                 contentDescription = "Barbearia",
-                contentScale = ContentScale.Crop,
+                contentScale = ContentScale.FillHeight,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .heightIn(min = 330.dp)
+                    .height(imageHeight)
+                    .graphicsLayer { alpha = imageAlpha }
+                    .align(Alignment.TopCenter)
             )
+
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(horizontal = 12.dp, vertical = 12.dp)
                     .statusBarsPadding()
-                ,
-                    horizontalArrangement = Arrangement.SpaceBetween,
+                    .zIndex(1f),
+                horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
-            ){
-                IconButton(
-                    onClick = {},
-                    modifier = Modifier
-                        .clip(CircleShape)
-                        .background(MaterialTheme.colorScheme.background.copy(alpha = 0.1f)),
-                ) {
-                    Icon(
-                        painter = painterResource(R.drawable.ic_arrow_prev_small),
-                        contentDescription = "",
-                        tint = Color.White
-                    )
+            ) {
+                IconButton(onClick = onBack) {
+                    Box(
+                        modifier = Modifier
+                            .clip(CircleShape)
+                            .background(MaterialTheme.colorScheme.background.copy(alpha = 0.1f))
+                    ) {
+                        Icon(
+                            painter = painterResource(R.drawable.ic_arrow_prev_small),
+                            contentDescription = "",
+                            tint = Color.White
+                        )
+                    }
                 }
                 Text(
                     text = "Detalhes",
                     style = MaterialTheme.typography.titleMedium,
                     fontFamily = urbanistFamily,
                     fontWeight = FontWeight.Bold,
-                    modifier = Modifier.padding(top = 8.dp, bottom = 8.dp),
                     color = Color.White,
                     fontSize = 20.sp
                 )
-                IconButton(
-                    onClick = {},
-                    modifier = Modifier,
-                ) {
+                IconButton(onClick = {}) {
                     Icon(
                         painter = painterResource(R.drawable.ic_dot_menu),
                         contentDescription = "",
@@ -101,65 +117,72 @@ fun DetailScreen() {
                     )
                 }
             }
-        }
 
-        Box(
-            modifier = Modifier
-                .fillMaxSize().offset(y = (-30).dp)
-                .clip(RoundedCornerShape(topEnd = 32.dp, topStart = 32.dp))
-                .background(backgroundColorDark)
-        ){
             Column(
                 modifier = Modifier
                     .fillMaxSize()
-                    .background(MaterialTheme.colorScheme.background)
-                    .padding(top = 20.dp)
-                    .padding(horizontal = 16.dp)
+                    .verticalScroll(scrollState)
+                    .padding(top = imageHeight - 30.dp)
+                    .clip(RoundedCornerShape(topStart = 32.dp, topEnd = 32.dp))
+                    .background(backgroundColorDark)
+                    .zIndex(0f)
             ) {
-                Text(
-                    text = "Barbearia demo",
-                    style = MaterialTheme.typography.titleMedium,
-                    fontFamily = urbanistFamily,
-                    fontWeight = FontWeight.Bold,
-                    modifier = Modifier.padding(top = 8.dp, bottom = 8.dp),
-                    color = MaterialTheme.colorScheme.primary,
-                    fontSize = 20.sp
-                )
-                Column{
-                    Row(modifier = Modifier.padding(bottom = 8.dp)){
-                        Icon(
-                            painter = painterResource(R.drawable.ic_map_fill),
-                            contentDescription = null,
-                            tint = yellow,
-                            modifier = Modifier.padding(end = 3.dp)
-                        )
-                        Text(
-                            text = "123 km",
-                            color = MaterialTheme.colorScheme.secondary,
-                            style = MaterialTheme.typography.bodySmall,
-                        )
-                    }
-                    Row(modifier = Modifier.padding(bottom = 8.dp)){
-                        Icon(
-                            painter = painterResource(R.drawable.ic_star),
-                            contentDescription = null,
-                            tint = yellow,
-                            modifier = Modifier.padding(end = 3.dp)
-                        )
-                        Text(
-                            text = "4.8",
-                            color = yellow,
-                            style = MaterialTheme.typography.bodySmall,
-                        )
-                    }
-                }
+                Column(
+                    modifier = Modifier
+                        .background(MaterialTheme.colorScheme.background)
+                        .padding(top = 20.dp)
+                        .padding(horizontal = 16.dp)
+                ) {
+                    Text(
+                        text = "Barbearia demo",
+                        style = MaterialTheme.typography.titleMedium,
+                        fontFamily = urbanistFamily,
+                        fontWeight = FontWeight.Bold,
+                        modifier = Modifier.padding(top = 8.dp, bottom = 8.dp),
+                        color = MaterialTheme.colorScheme.primary,
+                        fontSize = 20.sp
+                    )
 
-                QuickActions()
+                    Column {
+                        Row(modifier = Modifier.padding(bottom = 8.dp)) {
+                            Icon(
+                                painter = painterResource(R.drawable.ic_map_fill),
+                                contentDescription = null,
+                                tint = yellow,
+                                modifier = Modifier.padding(end = 3.dp)
+                            )
+                            Text(
+                                text = "123 km",
+                                color = MaterialTheme.colorScheme.secondary,
+                                style = MaterialTheme.typography.bodySmall,
+                            )
+                        }
+                        Row(modifier = Modifier.padding(bottom = 8.dp)) {
+                            Icon(
+                                painter = painterResource(R.drawable.ic_star),
+                                contentDescription = null,
+                                tint = yellow,
+                                modifier = Modifier.padding(end = 3.dp)
+                            )
+                            Text(
+                                text = "4.8",
+                                color = yellow,
+                                style = MaterialTheme.typography.bodySmall,
+                            )
+                        }
+                    }
+
+                    QuickActions()
+
+                    Spacer(modifier = Modifier.height(500.dp))
+                }
             }
         }
-
     }
 }
+
+
+
 
 @PreviewLightDark
 @Composable
