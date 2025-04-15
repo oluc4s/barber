@@ -7,10 +7,10 @@
         <compositeConfiguration>
           <compositeBuild compositeDefinitionSource="SCRIPT">
             <builds>
-              <build path="$PROJECT_DIR$/build-logic" name="build-logic">
+              <build path="$PROJECT_DIR$/sample/build-logic" name="build-logic">
                 <projects>
-                  <project path="$PROJECT_DIR$/build-logic" />
-                  <project path="$PROJECT_DIR$/build-logic/convention" />
+                  <project path="$PROJECT_DIR$/sample/build-logic" />
+                  <project path="$PROJECT_DIR$/sample/build-logic/convention" />
                 </projects>
               </build>
             </builds>
@@ -24,22 +24,22 @@
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/auth" />
-            <option value="$PROJECT_DIR$/auth/data" />
-            <option value="$PROJECT_DIR$/auth/domain" />
-            <option value="$PROJECT_DIR$/auth/presentation" />
-            <option value="$PROJECT_DIR$/build-logic" />
-            <option value="$PROJECT_DIR$/build-logic/convention" />
             <option value="$PROJECT_DIR$/core" />
-            <option value="$PROJECT_DIR$/core/data" />
-            <option value="$PROJECT_DIR$/core/database" />
-            <option value="$PROJECT_DIR$/core/domain" />
             <option value="$PROJECT_DIR$/core/presentation" />
-            <option value="$PROJECT_DIR$/core/presentation/designsystem" />
-            <option value="$PROJECT_DIR$/core/presentation/ui" />
             <option value="$PROJECT_DIR$/home" />
             <option value="$PROJECT_DIR$/home/data" />
             <option value="$PROJECT_DIR$/home/domain" />
             <option value="$PROJECT_DIR$/home/presentation" />
+            <option value="$PROJECT_DIR$/sample/auth/data" />
+            <option value="$PROJECT_DIR$/sample/auth/domain" />
+            <option value="$PROJECT_DIR$/sample/auth/presentation" />
+            <option value="$PROJECT_DIR$/sample/build-logic" />
+            <option value="$PROJECT_DIR$/sample/build-logic/convention" />
+            <option value="$PROJECT_DIR$/sample/core/data" />
+            <option value="$PROJECT_DIR$/sample/core/database" />
+            <option value="$PROJECT_DIR$/sample/core/domain" />
+            <option value="$PROJECT_DIR$/sample/core/presentation/designsystem" />
+            <option value="$PROJECT_DIR$/sample/core/presentation/ui" />
           </set>
         </option>
       </GradleProjectSettings>

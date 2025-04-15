@@ -2,6 +2,10 @@
 <project version="4">
   <component name="CompilerConfiguration">
     <bytecodeTargetLevel target="11">
+      <module name="barber.home.data" target="21" />
+      <module name="barber.home.presentation" target="21" />
+      <module name="build-logic.convention.main" target="21" />
+      <module name="build-logic.convention.test" target="21" />
       <module name="sample.app" target="17" />
       <module name="sample.auth.data" target="17" />
       <module name="sample.auth.presentation" target="17" />

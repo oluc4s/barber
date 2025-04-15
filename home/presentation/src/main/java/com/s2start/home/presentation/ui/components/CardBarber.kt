@@ -53,7 +53,7 @@ import com.s2start.home.presentation.model.mockBarberResume
 
 
 @Composable
-fun CardResumeBarber(barber: BarberResumeUi){
+fun CardResumeBarber(barber: BarberResumeUi,onClickCard: () -> Unit = {}){
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -64,7 +64,8 @@ fun CardResumeBarber(barber: BarberResumeUi){
                 shape = RoundedCornerShape(16.dp)
             ),
         shape = RoundedCornerShape(16.dp),
-        colors = CardDefaults.cardColors(containerColor = Color.Transparent)
+        colors = CardDefaults.cardColors(containerColor = Color.Transparent),
+        onClick = onClickCard
     ) {
         Column(modifier = Modifier.padding(16.dp)) {
             Row(

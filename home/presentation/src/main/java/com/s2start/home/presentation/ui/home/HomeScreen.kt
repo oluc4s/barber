@@ -114,7 +114,12 @@ fun HomeScreen(
             }
 
             items(listBarber){
-                CardResumeBarber(it)
+                CardResumeBarber(
+                    it,
+                    onClickCard = {
+                        onNavigate(Routes.BarberDetailScreen)
+                    }
+                )
             }
         }
     }
