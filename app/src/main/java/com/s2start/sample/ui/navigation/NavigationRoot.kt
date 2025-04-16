@@ -170,6 +170,7 @@ private fun NavGraphBuilder.homeGraph(navController: NavHostController) {
         ) {
             val args = it.toRoute<HomeRoutes.BarberDetailScreen>()
             DetailScreenRoot(
+                barberId = args.barberId,
                 onBack = { navController.popBackStack() }
             )
         }

@@ -1,6 +1,7 @@
 package com.s2start.home.presentation.di
 
 import com.s2start.home.presentation.ui.barbershops.create.BarberShopCreateViewModel
+import com.s2start.home.presentation.ui.barbershops.detail.DetailsViewModel
 import com.s2start.home.presentation.ui.barbershops.list.BarberShopsViewModel
 import com.s2start.home.presentation.ui.chat.ChatViewModel
 import com.s2start.home.presentation.ui.cut.CutViewModel
@@ -18,4 +19,5 @@ val homePresentationModule = module {
     viewModelOf(::BarberShopCreateViewModel)
     viewModelOf(::MyBarberViewModel)
     viewModelOf(::ProfileViewModel)
+    viewModelOf(::DetailsViewModel)
 }

@@ -13,6 +13,7 @@ val homeDataModule = module {
     singleOf(::BarberFirebaseImpl).bind<BarberFirebase>()
     singleOf(::BarberRepositoryImpl).bind<BarberRepository>()
     singleOf(::CreateBarberUseCase)
+    singleOf(::GetBarberItemUseCase)
     singleOf(::GetListBarberUseCase)
     singleOf(::GetMyListBarberUseCase)
 }

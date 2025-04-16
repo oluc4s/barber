@@ -19,4 +19,6 @@ dependencies {
     implementation(projects.home.domain)
     implementation(projects.core.domain)
     implementation("com.google.maps.android:maps-compose:6.4.0")
+    implementation("com.google.accompanist:accompanist-placeholder-material:0.32.0")
+
 }

@@ -71,30 +71,8 @@ fun HomeScreen(
         it.name.contains(search.value, ignoreCase = true)
     }.sortedBy { it.distance }
 
-//    LaunchedEffect(listState) {
-//        snapshotFlow { listState.firstVisibleItemIndex to listState.firstVisibleItemScrollOffset }
-//            .collect { (currentIndex, currentOffset) ->
-//                if (currentIndex > previousFirstVisibleIndex ||
-//                    (currentIndex == previousFirstVisibleIndex && currentOffset > previousScrollOffset)
-//                ) {
-//                    showMenuTop = false
-//                } else if (currentIndex < previousFirstVisibleIndex ||
-//                    (currentIndex == previousFirstVisibleIndex && currentOffset < previousScrollOffset)
-//                ) {
-//                    showMenuTop = true
-//                }
-//
-//
-//                previousFirstVisibleIndex = currentIndex
-//                previousScrollOffset = currentOffset
-//            }
-//    }
-
-
     Screen(
-        topBar = {
-            if(showMenuTop){ TopBar(state = state){ search.value = it} }
-                 },
+        topBar = { if(showMenuTop){ TopBar(state = state){ search.value = it} } },
         bottomBar = { BottomBar(onNavigate,HomeRoutes.HomeScreen) },
         containerColor = MaterialTheme.colorScheme.background
     ) {
@@ -111,10 +89,8 @@ fun HomeScreen(
                 item { SectionTitle("Barbearias"){ onNavigate(HomeRoutes.BarberShopsScreen) } }
             }
 
-            items(listBarber){
-                CardResumeBarber(
-                    it,
-                    onClickCard = {
+            items(listBarber,key = { it.barberId }){
+                CardResumeBarber(it, onClickCard = {
                         onNavigate(HomeRoutes.BarberDetailScreen(it.barberId))
                     }
                 )

@@ -6,6 +6,7 @@ import kotlinx.serialization.Serializable
 @Serializable
 data class BarberResumeUi(
     val barberId:String = "",
+    val userId:String = "",
     val name:String,
     val address:String,
     val image: String,
@@ -17,6 +18,8 @@ data class BarberResumeUi(
 )
 
 fun BarberModel.toUiModel() = BarberResumeUi(
+    barberId = id,
+    userId = userId,
     name = name,
     address = address,
     distance = distance,
@@ -28,6 +31,8 @@ fun BarberModel.toUiModel() = BarberResumeUi(
 )
 fun List<BarberModel>.toUiListModel() = this.map {
     BarberResumeUi(
+        barberId = it.id,
+        userId = it.userId,
         name = it.name,
         address = it.address,
         distance = it.distance,

@@ -33,22 +33,42 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.PreviewLightDark
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.zIndex
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.s2start.designsystem.AlpacaTheme
 import com.s2start.designsystem.backgroundColorDark
 import com.s2start.designsystem.urbanistFamily
 import com.s2start.designsystem.yellow
 import com.s2start.home.presentation.ui.components.ClipShape
 import com.s2start.home.presentation.ui.components.QuickActionButton
+import io.ktor.http.parameters
+import io.ktor.http.parametersOf
+import org.koin.androidx.compose.koinViewModel
+import org.koin.core.parameter.parametersOf
 
 @Composable
 fun DetailScreenRoot(
+    barberId:String,
+    viewModel:DetailsViewModel = koinViewModel{ parametersOf(barberId) },
     onBack: () -> Unit = {}
 ) {
-    DetailScreen(onBack = onBack)
+    val state: DetailsState = viewModel.state
+
+    when{
+        state.isLoadding -> {
+            DetailScreenShimmer()
+        }
+        else -> {
+            DetailScreen(
+                state = state,
+                onBack = onBack
+            )
+        }
+    }
 }
 
 @Composable
 fun DetailScreen(
+    state: DetailsState,
     onBack: () -> Unit = {}
 ) {
     val scrollState = rememberScrollState()
@@ -136,7 +156,7 @@ fun DetailScreen(
                         .padding(horizontal = 16.dp)
                 ) {
                     Text(
-                        text = "Barbearia demo",
+                        text = state.barberResumeUi?.name.orEmpty(),
                         style = MaterialTheme.typography.titleMedium,
                         fontFamily = urbanistFamily,
                         fontWeight = FontWeight.Bold,
@@ -154,7 +174,7 @@ fun DetailScreen(
                                 modifier = Modifier.padding(end = 3.dp)
                             )
                             Text(
-                                text = "123 Main Street, Anytown, USA",
+                                text = state.barberResumeUi?.address.orEmpty(),
                                 color = MaterialTheme.colorScheme.secondary,
                                 style = MaterialTheme.typography.bodySmall,
                             )
@@ -212,6 +232,6 @@ private fun QuickActionsDetails(modifier: Modifier = Modifier){
 @Composable
 private fun DetailScreenPreview() {
     AlpacaTheme{
-        DetailScreen()
+        DetailScreen(DetailsState())
     }
 }
