@@ -11,6 +11,7 @@ import com.s2start.designsystem.components.button.ButtonAlpaca
 import com.s2start.designsystem.components.screen.Screen
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
@@ -25,6 +26,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.ContentScale
@@ -38,8 +40,13 @@ import com.s2start.designsystem.AlpacaTheme
 import com.s2start.designsystem.backgroundColorDark
 import com.s2start.designsystem.urbanistFamily
 import com.s2start.designsystem.yellow
+import com.s2start.designsystem.yellowSecondary
+import com.s2start.home.presentation.model.mockBarberResume
+import com.s2start.home.presentation.route.HomeRoutes
 import com.s2start.home.presentation.ui.components.ClipShape
 import com.s2start.home.presentation.ui.components.QuickActionButton
+import com.s2start.home.presentation.ui.components.SectionTitle
+import com.s2start.home.presentation.ui.components.checkClipShape
 import io.ktor.http.parameters
 import io.ktor.http.parametersOf
 import org.koin.androidx.compose.koinViewModel
@@ -154,6 +161,7 @@ fun DetailScreen(
                         .background(MaterialTheme.colorScheme.background)
                         .padding(top = 20.dp)
                         .padding(horizontal = 16.dp)
+                        .fillMaxWidth()
                 ) {
                     Text(
                         text = state.barberResumeUi?.name.orEmpty(),
@@ -200,6 +208,12 @@ fun DetailScreen(
                     }
 
                     QuickActionsDetails(modifier = Modifier.padding(vertical = 16.dp))
+                    SectionTitle("Barbeiros")
+                    Row {
+                        repeat(4){
+                            UserBarber()
+                        }
+                    }
 
                     Spacer(modifier = Modifier.height(500.dp))
                 }
@@ -208,6 +222,39 @@ fun DetailScreen(
     }
 }
 
+@Composable
+private fun UserBarber(){
+    Column (
+        modifier = Modifier
+            .padding(horizontal = 6.dp)
+            .shadow(1.dp, RoundedCornerShape(7.dp))
+            .clip(RoundedCornerShape(12.dp))
+            .border(width = 1.dp, color = Color.Gray, RoundedCornerShape(12.dp))
+            .widthIn(min = 70.dp)
+            .background(MaterialTheme.colorScheme.background),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center
+    ){
+        Image(
+            painter = painterResource(id = R.drawable.im_user_mock),
+            contentDescription = "Notifications",
+            modifier = Modifier
+                .padding(7.dp)
+                .clip(CircleShape)
+                .padding(horizontal = 2.dp)
+                .size(50.dp),
+        )
+        Text(
+            text = "Matheus",
+            style = MaterialTheme.typography.titleMedium,
+            fontFamily = urbanistFamily,
+            fontWeight = FontWeight.Bold,
+            modifier = Modifier.padding(top = 8.dp, bottom = 8.dp),
+            color = MaterialTheme.colorScheme.secondary,
+            fontSize = 12.sp
+        )
+    }
+}
 
 @Composable
 private fun QuickActionsDetails(modifier: Modifier = Modifier){
@@ -232,6 +279,6 @@ private fun QuickActionsDetails(modifier: Modifier = Modifier){
 @Composable
 private fun DetailScreenPreview() {
     AlpacaTheme{
-        DetailScreen(DetailsState())
+        DetailScreen(DetailsState(barberResumeUi = mockBarberResume))
     }
 }

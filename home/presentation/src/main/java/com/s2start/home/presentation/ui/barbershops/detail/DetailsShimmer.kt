@@ -38,16 +38,6 @@ fun DetailScreenShimmer() {
     val imageHeight = 400.dp
 
     Screen(
-        bottomBar = {
-            ButtonAlpaca(
-                text = "",
-                onClick = {},
-                modifier = Modifier
-                    .padding(horizontal = 12.dp)
-                    .padding(bottom = 12.dp)
-                    .placeholder(visible = true)
-            )
-        },
         clearTopPadding = true
     ) {
 
@@ -133,7 +123,7 @@ fun DetailScreenShimmer() {
                             text = "",
                             onClick = {},
                             modifier = Modifier
-                                .padding(horizontal = 12.dp)
+                                .padding(horizontal = 7.dp)
                                 .padding(bottom = 12.dp)
                                 .placeholder(visible = true)
                         )
