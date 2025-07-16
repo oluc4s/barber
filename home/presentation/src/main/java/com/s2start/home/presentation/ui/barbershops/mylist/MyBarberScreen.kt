@@ -24,6 +24,7 @@ fun MyBarberScreenRoot(
 ) {
     MyBarberScreen(
         state = viewModel.state,
+        onNavigate = onNavigate,
         onBack = onBack
     )
 }
@@ -32,6 +33,7 @@ fun MyBarberScreenRoot(
 @Composable
 fun MyBarberScreen(
     state: MyBarberState,
+    onNavigate: (HomeRoutes) -> Unit = {},
     onBack: () -> Unit = {}
 ) {
     val listBarber = state.barberResumeUi.sortedBy { it.distance }
@@ -48,7 +50,9 @@ fun MyBarberScreen(
                 modifier = Modifier.fillMaxSize(),
             ) {
                 items(listBarber) {
-                    CardResumeBarber(it)
+                    CardResumeBarber(it){
+                        onNavigate(HomeRoutes.BarberDetailScreen(it.barberId))
+                    }
                 }
             }
         }

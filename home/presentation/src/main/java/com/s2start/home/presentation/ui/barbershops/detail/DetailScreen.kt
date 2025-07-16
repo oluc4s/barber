@@ -17,13 +17,18 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.DropdownMenu
+import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.MenuItemColors
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
@@ -41,6 +46,7 @@ import com.s2start.designsystem.backgroundColorDark
 import com.s2start.designsystem.urbanistFamily
 import com.s2start.designsystem.yellow
 import com.s2start.designsystem.yellowSecondary
+import com.s2start.home.presentation.model.DropdownItem
 import com.s2start.home.presentation.model.mockBarberResume
 import com.s2start.home.presentation.route.HomeRoutes
 import com.s2start.home.presentation.ui.components.ClipShape
@@ -82,6 +88,12 @@ fun DetailScreen(
     val imageAlpha by remember { derivedStateOf { 1f - (scrollState.value / 1000f).coerceIn(0f, 1f) } }
     val imageHeight = 400.dp
 
+    val menuItems = if(state.authInfo?.uid == state.barberResumeUi?.userId) {
+        listOf(
+            DropdownItem("Editar", onClick = {}),
+            DropdownItem("Excluir", onClick = {})
+        ) } else { listOf() }
+
     Screen(
         bottomBar = {
             ButtonAlpaca(
@@ -108,44 +120,7 @@ fun DetailScreen(
                     .align(Alignment.TopCenter)
             )
 
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 12.dp, vertical = 12.dp)
-                    .statusBarsPadding()
-                    .zIndex(1f),
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                IconButton(onClick = onBack) {
-                    Box(
-                        modifier = Modifier
-                            .clip(CircleShape)
-                            .background(MaterialTheme.colorScheme.background.copy(alpha = 0.1f))
-                    ) {
-                        Icon(
-                            painter = painterResource(R.drawable.ic_arrow_prev_small),
-                            contentDescription = "",
-                            tint = Color.White
-                        )
-                    }
-                }
-                Text(
-                    text = "Detalhes",
-                    style = MaterialTheme.typography.titleMedium,
-                    fontFamily = urbanistFamily,
-                    fontWeight = FontWeight.Bold,
-                    color = Color.White,
-                    fontSize = 20.sp
-                )
-                IconButton(onClick = {}) {
-                    Icon(
-                        painter = painterResource(R.drawable.ic_dot_menu),
-                        contentDescription = "",
-                        tint = Color.White
-                    )
-                }
-            }
+            HeaderDetails(onBack = onBack, menuItems = menuItems)
 
             Column(
                 modifier = Modifier
@@ -221,7 +196,91 @@ fun DetailScreen(
         }
     }
 }
+@Composable
+private fun HeaderDetails(
+    menuItems: List<DropdownItem>? = null,
+    onBack: () -> Unit = {}
+){
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 12.dp, vertical = 12.dp)
+            .statusBarsPadding()
+            .zIndex(1f),
+        horizontalArrangement = Arrangement.SpaceBetween,
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        IconButton(onClick = onBack) {
+            Box(
+                modifier = Modifier
+                    .clip(CircleShape)
+                    .background(MaterialTheme.colorScheme.background.copy(alpha = 0.1f))
+            ) {
+                Icon(
+                    painter = painterResource(R.drawable.ic_arrow_prev_small),
+                    contentDescription = "",
+                    tint = Color.White
+                )
+            }
+        }
+        Text(
+            text = "Detalhes",
+            style = MaterialTheme.typography.titleMedium,
+            fontFamily = urbanistFamily,
+            fontWeight = FontWeight.Bold,
+            color = Color.White,
+            fontSize = 20.sp
+        )
+        if (!menuItems.isNullOrEmpty()) {
+            var expanded by remember { mutableStateOf(false) }
 
+            Box(
+                modifier = Modifier
+                    .padding(16.dp)
+            ) {
+                IconButton(onClick = { expanded = !expanded }) {
+                    Box(
+                        modifier = Modifier
+                            .clip(CircleShape)
+                            .background(MaterialTheme.colorScheme.background.copy(alpha = 0.1f))
+                    ) {
+                    Icon(
+                        painter = painterResource(id = R.drawable.ic_dot_menu),
+                        contentDescription = "More options",
+                        tint = Color.White,
+                        modifier = Modifier.size(20.dp)
+                    )
+                    }
+                }
+                DropdownMenu(
+                    expanded = expanded,
+                    onDismissRequest = { expanded = false },
+                    containerColor = MaterialTheme.colorScheme.background
+                ) {
+                    menuItems.map {
+                        val leadingIcon: (@Composable () -> Unit)? = it.icon?.let { iconRes ->
+                            {
+                                Icon(
+                                    painter = painterResource(id = iconRes),
+                                    contentDescription = null
+                                )
+                            }
+                        }
+                        DropdownMenuItem(
+                            text = { Text(text = it.label, color = MaterialTheme.colorScheme.primary) },
+                            onClick = {
+                                expanded = false
+                                it.onClick.invoke()
+                            },
+                            leadingIcon = leadingIcon
+                        )
+                    }
+                }
+            }
+        } else { Box{} }
+
+    }
+}
 @Composable
 private fun UserBarber(){
     Column (

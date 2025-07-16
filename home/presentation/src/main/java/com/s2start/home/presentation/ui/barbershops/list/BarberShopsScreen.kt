@@ -32,10 +32,10 @@ import com.s2start.designsystem.AlpacaTheme
 import com.s2start.designsystem.components.screen.Screen
 import com.s2start.designsystem.urbanistFamily
 import com.s2start.designsystem.yellow
+import com.s2start.home.presentation.model.DropdownItem
 import com.s2start.home.presentation.route.HomeRoutes
 import com.s2start.home.presentation.ui.components.BottomBar
 import com.s2start.home.presentation.ui.components.CardResumeBarber
-import com.s2start.home.presentation.ui.components.DropdownItem
 import com.s2start.home.presentation.ui.components.TopBar
 import org.koin.androidx.compose.koinViewModel
 
@@ -56,7 +56,6 @@ fun BarberShopsScreen(
     state: BarberShopsState,
     onNavigate: (HomeRoutes) -> Unit = {}
 ) {
-    val context = LocalContext.current
     Screen (
         topBar = { TopBar(
             "Barbearias",
@@ -115,7 +114,9 @@ fun BarberShopsScreen(
                         modifier = Modifier.fillMaxSize(),
                     ) {
                         items(listBarber) {
-                            CardResumeBarber(it)
+                            CardResumeBarber(it){
+                                onNavigate(HomeRoutes.BarberDetailScreen(it.barberId))
+                            }
                         }
                     }
                 }

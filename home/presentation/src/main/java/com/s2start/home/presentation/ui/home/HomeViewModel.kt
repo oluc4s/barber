@@ -16,10 +16,9 @@ import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.model.LatLng
 import com.s2start.domain.SessionStorage
 import com.s2start.domain.util.ModelResult.Companion.onSuccess
-import com.s2start.home.domain.model.BarberModel
-import com.s2start.home.domain.usecase.CreateBarberUseCase
 import com.s2start.home.domain.usecase.GetListBarberUseCase
-import com.s2start.home.presentation.model.BarberResumeUi
+import com.s2start.home.domain.usecase.GetMyListBarberUseCase
+import com.s2start.home.presentation.model.SessionConfiguration
 import com.s2start.home.presentation.model.mockBarberResumeList
 import com.s2start.home.presentation.model.toUiListModel
 import kotlinx.coroutines.CoroutineScope
@@ -35,7 +34,9 @@ class HomeViewModel(
     private val applicationScope: CoroutineScope,
     private val sessionStorage: SessionStorage,
     private val application: Context,
-    private val getListBarberUseCase: GetListBarberUseCase
+    private val getListBarberUseCase: GetListBarberUseCase,
+    private val getMyListBarberUseCase: GetMyListBarberUseCase
+
 ): ViewModel() {
     private val fusedLocationClient = LocationServices.getFusedLocationProviderClient(application)
 
@@ -49,12 +50,17 @@ class HomeViewModel(
 
 
     init {
-//        getUserLocation()
-//        fetchBarberCoordinates()
         viewModelScope.launch {
             sessionStorage.get()?.let {
                 state = state.copy(authInfo = it)
             }
+
+            getMyListBarberUseCase.invoke().onSuccess {
+                viewModelScope.launch {
+                    sessionStorage.set(SessionConfiguration(it.isNotEmpty()), SessionConfiguration::class)
+                }
+            }
+
             getListBarberUseCase.invoke().onSuccess {
                 state = state.copy(barberResumeUi = it.toUiListModel().toMutableList())
             }

@@ -23,6 +23,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.s2start.core.presentation.designsystem.R
 import com.s2start.designsystem.urbanistFamily
+import com.s2start.home.presentation.model.DropdownItem
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -118,5 +119,3 @@ fun TopBar(
         )
     )
 }
-
-data class DropdownItem(val label: String, val icon: Int? = null, val onClick: () -> Unit)
