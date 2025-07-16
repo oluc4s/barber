@@ -1,29 +1,9 @@
-pluginManagement {
-    includeBuild("build-logic")
-    repositories {
-        google()
-        mavenCentral()
-        gradlePluginPortal()
-    }
+apply {
+    from("${rootDir}/sample/settings.gradle.kts")
 }
-dependencyResolutionManagement {
-    repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
-    repositories {
-        google()
-        mavenCentral()
-    }
-}
-gradle.startParameter.excludedTaskNames.addAll(listOf(":build-logic:convention:testClasses"))
 
-rootProject.name = "sample"
-enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
+rootProject.name = "barber"
 include(":app")
-include(":auth:presentation")
-include(":core:presentation:designsystem")
-include(":core:presentation:ui")
-include(":auth:domain")
-include(":core:domain")
-include(":auth:data")
-include(":core:data")
 include(":home:presentation")
-include(":core:database")
+include(":home:data")
+include(":home:domain")

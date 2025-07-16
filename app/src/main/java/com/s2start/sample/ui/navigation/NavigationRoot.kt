@@ -1,16 +1,27 @@
 package com.s2start.sample.ui.navigation
 
+import androidx.compose.animation.AnimatedContentTransitionScope.SlideDirection
+import androidx.compose.animation.core.tween
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
+import androidx.navigation.toRoute
+import com.s2start.auth.presentation.route.AuthRoutes
 import com.s2start.auth.presentation.ui.login.LoginScreenRoot
 import com.s2start.auth.presentation.ui.recover.RecoverScreenRoot
 import com.s2start.auth.presentation.ui.register.RegisterScreenRoot
 import com.s2start.home.presentation.ui.home.HomeScreenRoot
-import com.s2start.sample.data.model.Routes
+import com.s2start.home.presentation.route.HomeRoutes
+import com.s2start.home.presentation.ui.barbershops.create.BarberShopCreateScreenRoot
+import com.s2start.home.presentation.ui.barbershops.list.BarberShopsScreenRoot
+import com.s2start.home.presentation.ui.barbershops.mylist.MyBarberScreenRoot
+import com.s2start.home.presentation.ui.chat.ChatScreenRoot
+import com.s2start.home.presentation.ui.cut.CutScreenRoot
+import com.s2start.home.presentation.ui.barbershops.detail.DetailScreenRoot
+import com.s2start.home.presentation.ui.profile.ProfileScreenRoot
 
 @Composable
 fun NavigationRoot(
@@ -19,7 +30,7 @@ fun NavigationRoot(
 ) {
     NavHost(
         navController = navController,
-        startDestination = if (isLoggedIn) Routes.HomeNavigation else Routes.AuthNavigation
+        startDestination = if (isLoggedIn) HomeRoutes.HomeNavigation else AuthRoutes.AuthNavigation
     ) {
         authGraph(navController)
         homeGraph(navController)
@@ -27,14 +38,17 @@ fun NavigationRoot(
 }
 
 private fun NavGraphBuilder.authGraph(navController: NavHostController) {
-    navigation<Routes.AuthNavigation>(
-        startDestination = Routes.LoginScreen,
+    navigation<AuthRoutes.AuthNavigation>(
+        startDestination = AuthRoutes.LoginScreen,
     ) {
-        composable<Routes.RegisterScreen> {
+        composable<AuthRoutes.RegisterScreen>(
+            enterTransition = { slideIntoContainer(SlideDirection.Start, animationSpec = tween(500)) },
+            exitTransition = { slideOutOfContainer(SlideDirection.Right, animationSpec = tween(500)) }
+        ) {
             RegisterScreenRoot(
                 onSignInClick = {
-                    navController.navigate(Routes.LoginScreen) {
-                        popUpTo(Routes.RegisterScreen) {
+                    navController.navigate(AuthRoutes.LoginScreen) {
+                        popUpTo(AuthRoutes.RegisterScreen) {
                             inclusive = true
                             saveState = true
                         }
@@ -42,22 +56,22 @@ private fun NavGraphBuilder.authGraph(navController: NavHostController) {
                     }
                 },
                 onSuccessfulRegistration = {
-                    navController.navigate(Routes.LoginScreen)
+                    navController.navigate(AuthRoutes.LoginScreen)
                 }
             )
         }
-        composable<Routes.LoginScreen> {
+        composable<AuthRoutes.LoginScreen> {
             LoginScreenRoot(
                 onLoginSuccess = {
-                    navController.navigate(Routes.HomeNavigation) {
-                        popUpTo(Routes.AuthNavigation) {
+                    navController.navigate(HomeRoutes.HomeNavigation) {
+                        popUpTo(AuthRoutes.AuthNavigation) {
                             inclusive = true
                         }
                     }
                 },
                 onSignUpClick = {
-                    navController.navigate(Routes.RegisterScreen) {
-                        popUpTo(Routes.LoginScreen) {
+                    navController.navigate(AuthRoutes.RegisterScreen) {
+                        popUpTo(AuthRoutes.LoginScreen) {
                             inclusive = true
                             saveState = true
                         }
@@ -65,8 +79,8 @@ private fun NavGraphBuilder.authGraph(navController: NavHostController) {
                     }
                 },
                 onRecoverClick = {
-                    navController.navigate(Routes.Recover) {
-                        popUpTo(Routes.LoginScreen) {
+                    navController.navigate(AuthRoutes.Recover) {
+                        popUpTo(AuthRoutes.LoginScreen) {
                             inclusive = true
                             saveState = true
                         }
@@ -76,11 +90,14 @@ private fun NavGraphBuilder.authGraph(navController: NavHostController) {
 
             )
         }
-        composable<Routes.Recover> {
+        composable<AuthRoutes.Recover>(
+            enterTransition = { slideIntoContainer(SlideDirection.Start, animationSpec = tween(500)) },
+            exitTransition = { slideOutOfContainer(SlideDirection.Right, animationSpec = tween(500)) }
+        ) {
             RecoverScreenRoot(
                 onSignInClick = {
-                    navController.navigate(Routes.LoginScreen) {
-                        popUpTo(Routes.RegisterScreen) {
+                    navController.navigate(AuthRoutes.LoginScreen) {
+                        popUpTo(AuthRoutes.RegisterScreen) {
                             inclusive = true
                             saveState = true
                         }
@@ -93,20 +110,69 @@ private fun NavGraphBuilder.authGraph(navController: NavHostController) {
     }
 }
 
-
-
 private fun NavGraphBuilder.homeGraph(navController: NavHostController) {
-    navigation<Routes.HomeNavigation>(
-        startDestination = Routes.HomeScreen
+    navigation<HomeRoutes.HomeNavigation>(
+        startDestination = HomeRoutes.HomeScreen
     ) {
-        composable<Routes.HomeScreen> {
-            HomeScreenRoot(onLogoutClick = {
-                navController.navigate(Routes.AuthNavigation) {
-                    popUpTo(Routes.HomeNavigation) {
-                        inclusive = true
+        composable<HomeRoutes.HomeScreen> {
+            HomeScreenRoot(
+                onNavigate = {
+                    navController.navigate(it)
+                }
+            )
+        }
+        composable<HomeRoutes.ProfileScreen> {
+            ProfileScreenRoot(
+                onNavigate = {
+                    navController.navigate(it)
+                },
+                onLogoutClick = {
+                    navController.navigate(AuthRoutes.AuthNavigation) {
+                        popUpTo(HomeRoutes.HomeNavigation) {
+                            inclusive = true
+                        }
                     }
                 }
-            })
+            )
+        }
+        composable<HomeRoutes.ChatScreen> {
+            ChatScreenRoot(onNavigate = { navController.navigate(it) })
+        }
+        composable<HomeRoutes.CutScreen> {
+            CutScreenRoot(onNavigate = { navController.navigate(it) })
+        }
+        composable<HomeRoutes.BarberShopsScreen> {
+            BarberShopsScreenRoot(onNavigate = { navController.navigate(it) })
+        }
+
+        composable<HomeRoutes.BarberShopsCreateScreen>(
+            enterTransition = { slideIntoContainer(SlideDirection.Start, animationSpec = tween(500)) },
+            exitTransition = { slideOutOfContainer(SlideDirection.Right, animationSpec = tween(500)) }
+        ){
+            BarberShopCreateScreenRoot(
+                onNavigate = { navController.navigate(it) },
+                onBack = { navController.popBackStack() }
+            )
+        }
+
+        composable<HomeRoutes.MyBarberScreen>(
+            enterTransition = { slideIntoContainer(SlideDirection.Start, animationSpec = tween(500)) },
+            exitTransition = { slideOutOfContainer(SlideDirection.Right, animationSpec = tween(500)) }
+        ) {
+            MyBarberScreenRoot(
+                onNavigate = { navController.navigate(it) },
+                onBack = { navController.popBackStack() }
+            )
+        }
+        composable<HomeRoutes.BarberDetailScreen>(
+            enterTransition = { slideIntoContainer(SlideDirection.Start, animationSpec = tween(500)) },
+            exitTransition = { slideOutOfContainer(SlideDirection.Right, animationSpec = tween(500)) }
+        ) {
+            val args = it.toRoute<HomeRoutes.BarberDetailScreen>()
+            DetailScreenRoot(
+                barberId = args.barberId,
+                onBack = { navController.popBackStack() }
+            )
         }
     }
 }
